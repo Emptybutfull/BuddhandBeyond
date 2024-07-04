@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Buddha Teacher</title>
+    <style>
+        :root {
+            --primary-color: #50b3a2;
+            --secondary-color: #f4f4f4;
+            --text-color: #333;
+            --background-color: #fff;
+        }
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background-color: var(--background-color);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: var(--primary-color);
+        }
+        input, button, select {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #3a8c7d;
+        }
+        #response, #follow-up, #related-topics, #citations, #excerpts {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-left: 5px solid var(--primary-color);
+            border-radius: 4px;
+        }
+        .follow-up-btn, .related-topic-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 20px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .follow-up-btn:hover, .related-topic-btn:hover {
+            background-color: #3a8c7d;
+            transform: translateY(-2px);
+        }
+        .difficulty {
+            font-size: 0.8em;
+            color: #666;
+            font-style: italic;
+        }
+        #progress {
+            margin-top: 20px;
+            background-color: #e0e0e0;
+            border-radius: 20px;
+            height: 10px;
+        }
+        #progress-bar {
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 20px;
+            transition: width 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Modern Buddha Teacher</h1>
+        <p>Explore Buddhist teachings across various traditions and difficulty levels.</p>
+        
+        <select id="difficulty-filter">
+            <option value="all">All Levels</option>
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+        </select>
+        
+        <input type="text" id="question" placeholder="Ask your question here">
+        <button onclick="askBuddha()">Ask the Buddha</button>
+        
+        <div id="response"></div>
+        <div id="follow-up"></div>
+        <div id="related-topics"></div>
+        <div id="citations"></div>
+        <div id="excerpts"></div>
+        
+        <h3>Exploration Progress</h3>
+        <div id="progress"><div id="progress-bar"></div></div>
+    </div>
+
+    <script>
+    const buddhaTeachings = {
+        "four noble truths": {
+            content: "The Four Noble Truths are the foundation of Buddhist thought. They are: 1) The truth of suffering (dukkha), 2) The truth of the cause of suffering (samudaya), 3) The truth of the end of suffering (nirodha), and 4) The truth of the path that leads to the end of suffering (magga).",
+            followUp: ["Can you explain each Noble Truth in more detail?", "How do the Four Noble Truths relate to daily life?"],
+            relatedTopics: ["eightfold path", "dukkha", "nirvana"],
+            citations: ["Dhammacakkappavattana Sutta (SN 56.11)", "Maha-parinibbana Sutta (DN 16)"],
+            difficulty: "beginner",
+            excerpts: ["Thus have I heard. On one occasion the Blessed One was dwelling at Benares in the Deer Park at Isipatana. There the Blessed One addressed the bhikkhus of the group of five thus: 'Bhikkhus, these two extremes should not be followed by one who has gone forth into homelessness...'"]
+        },
+        "eightfold path": {
+            content: "The Noble Eightfold Path is the way to the end of suffering. It consists of: Right View, Right Intention, Right Speech, Right Action, Right Livelihood, Right Effort, Right Mindfulness, and Right Concentration.",
+            followUp: ["Can you explain each factor of the Eightfold Path?", "How does one practice the Eightfold Path in daily life?"],
+            relatedTopics: ["four noble truths", "meditation", "ethics"],
+            citations: ["Magga-vibhanga Sutta (SN 45.8)", "Maha-cattarisaka Sutta (MN 117)"],
+            difficulty: "beginner",
+            excerpts: ["And what, monks, is right view? Knowledge of suffering, knowledge of the origin of suffering, knowledge of the cessation of suffering, knowledge of the way leading to the cessation of suffering: this is called right view."]
+        },
+        "karma": {
+            content: "Karma is the law of moral causation. It refers to the principle that our actions have consequences, both in this life and in future lives. Good actions lead to positive results, while negative actions lead to suffering.",
+            followUp: ["How does karma affect rebirth?", "Can karma be changed or its effects mitigated?"],
+            relatedTopics: ["rebirth", "ethics", "dependent origination"],
+            citations: ["Culakammavibhanga Sutta (MN 135)", "Nibbedhika Sutta (AN 6.63)"],
+            difficulty: "intermediate",
+            excerpts: ["Beings are owners of their actions, heirs of their actions; they originate from their actions, are bound to their actions, have their actions as their refuge. It is action that distinguishes beings as inferior and superior."]
+        },
+        "meditation": {
+            content: "Meditation is a crucial practice in Buddhism. It includes techniques for cultivating mindfulness, concentration, and insight. Two primary forms are samatha (calm abiding) and vipassana (insight meditation).",
+            followUp: ["What's the difference between samatha and vipassana?", "How does one start a meditation practice?"],
+            relatedTopics: ["mindfulness", "concentration", "insight"],
+            citations: ["Anapanasati Sutta (MN 118)", "Satipatthana Sutta (MN 10)"],
+            difficulty: "beginner",
+            excerpts: ["And how, monks, does a monk develop mindfulness of breathing? Here a monk, having gone to the forest, to the foot of a tree, or to an empty place, sits down cross-legged, holds his body erect, and establishes mindfulness in front of him, ever mindful he breathes in, mindful he breathes out."]
+        },
+        "emptiness": {
+            content: "Emptiness (Sunyata) is a key concept in Mahayana Buddhism. It refers to the lack of inherent existence in all phenomena. Understanding emptiness leads to liberation from suffering and the realization of Buddha nature.",
+            followUp: ["How does emptiness relate to dependent origination?", "What are the practical implications of emptiness?"],
+            relatedTopics: ["dependent origination", "non-self", "mahayana"],
+            citations: ["Heart Sutra", "Mulamadhyamakakarika by Nagarjuna"],
+            difficulty: "advanced",
+            excerpts: ["Form is emptiness, emptiness is form. Emptiness is not other than form, form is not other than emptiness."]
+        },
+        "bodhisattva": {
+            content: "A Bodhisattva is an enlightened being who has vowed to postpone their own final enlightenment to help all sentient beings achieve liberation. This ideal is central to Mahayana Buddhism.",
+            followUp: ["What are the Bodhisattva vows?", "How does one practice the Bodhisattva path?"],
+            relatedTopics: ["mahayana", "compassion", "six perfections"],
+            citations: ["Vimalakirti Sutra", "Bodhicaryavatara by Shantideva"],
+            difficulty: "intermediate",
+            excerpts: ["May I be a protector for those without one, a guide for all travelers on the way; May I be a bridge, a boat and a ship for all who wish to cross the water."]
+        },
+        "vajrayana": {
+            content: "Vajrayana, also known as Tantric Buddhism, is an esoteric form of Buddhism. It emphasizes rituals, mantras, and meditation practices as means to achieve enlightenment in a single lifetime.",
+            followUp: ["What are some key Vajrayana practices?", "How does Vajrayana differ from other Buddhist schools?"],
+            relatedTopics: ["tantra", "mahayana", "tibetan buddhism"],
+            citations: ["Hevajra Tantra", "Guhyasamaja Tantra"],
+            difficulty: "advanced",
+            excerpts: ["The Vajrayana is like a thunderbolt, able to cut through delusion swiftly and powerfully, but also dangerous if mishandled."]
+        },
+        "zen": {
+            content: "Zen is a school of Mahayana Buddhism that emphasizes meditation, personal expression, self-restraint, and mindfulness in daily life. It often uses koans, paradoxical questions or statements, to provoke enlightenment.",
+            followUp: ["What is a Zen koan?", "How does Zen meditation differ from other forms?"],
+            relatedTopics: ["mahayana", "meditation", "mindfulness"],
+            citations: ["The Gateless Gate", "The Blue Cliff Record"],
+            difficulty: "intermediate",
+            excerpts: ["A monk asked Zhaozhou, 'Does a dog have Buddha nature or not?' Zhaozhou said, 'Wu' (No)."]
+        },
+        "dependent origination": {
+            content: "Dependent Origination (Pratityasamutpada) is a fundamental Buddhist teaching that states all phenomena arise in dependence upon multiple causes and conditions. Nothing exists independently.",
+            followUp: ["What are the 12 links of Dependent Origination?", "How does Dependent Origination relate to karma and rebirth?"],
+            relatedTopics: ["karma", "rebirth", "emptiness"],
+            citations: ["Mahanidana Sutta (DN 15)", "Pratityasamutpada Sutra"],
+            difficulty: "advanced",
+            excerpts: ["When this is, that is. From the arising of this comes the arising of that. When this isn't, that isn't. From the cessation of this comes the cessation of that."]
+        },
+        "six perfections": {
+            content: "The Six Perfections (Paramitas) are practices to cultivate in the Mahayana tradition: Generosity, Ethics, Patience, Diligence, Meditation, and Wisdom. They are the means by which a Bodhisattva reaches enlightenment.",
+            followUp: ["Can you explain each of the Six Perfections?", "How does one practice the Six Perfections in daily life?"],
+            relatedTopics: ["bodhisattva", "mahayana", "ethics"],
+            citations: ["Prajnaparamita Sutras", "Bodhicaryavatara by Shantideva"],
+            difficulty: "intermediate",
+            excerpts: ["And how does a Bodhisattva practice the perfection of giving? Whatever the Bodhisattva possesses, all that he gives away with a mind free from avarice."]
+        },
+        "mindfulness": {
+            content: "Mindfulness is the practice of maintaining a moment-by-moment awareness of our thoughts, feelings, bodily sensations, and surrounding environment. It's a key aspect of Buddhist meditation and daily practice.",
+            followUp: ["How can I practice mindfulness in daily life?", "What are the benefits of mindfulness practice?"],
+            relatedTopics: ["meditation", "present moment awareness", "satipatthana"],
+            citations: ["Satipatthana Sutta (MN 10)", "Anapanasati Sutta (MN 118)"],
+            difficulty: "beginner",
+            excerpts: ["And how, monks, does a monk remain focused on the body in & of itself? There is the case where a monk — having gone to the wilderness, to the shade of a tree, or to an empty building — sits down folding his legs crosswise, holding his body erect and setting mindfulness to the fore."]
+        },
+        "non-self": {
+            content: "Non-self (Anatta) is one of the three marks of existence in Buddhism. It posits that there is no unchanging, permanent self, soul, or essence in phenomena.",
+            followUp: ["How does the concept of non-self relate to rebirth?", "What are the practical implications of understanding non-self?"],
+            relatedTopics: ["five aggregates", "emptiness", "impermanence"],
+            citations: ["Anatta-lakkhana Sutta (SN 22.59)", "Dhammapada"],
+            difficulty: "advanced",
+            excerpts: ["'What do you think, monks? Is form permanent or impermanent?' — 'Impermanent, lord.' — 'And is that which is impermanent easeful or stressful?' — 'Stressful, lord.' — 'And is it fitting to regard what is impermanent, stressful, subject to change as: 'This is mine. This is my self. This is what I am'?' — 'No, lord.'"]
+        },
+        "four brahmaviharas": {
+            content: "The Four Brahmaviharas, also known as the Four Divine Abodes, are positive qualities cultivated in Buddhist practice: Loving-kindness (Metta), Compassion (Karuna), Empathetic Joy (Mudita), and Equanimity (Upekkha).",
+            followUp: ["How can one develop these qualities in daily life?", "What are the benefits of practicing the Brahmaviharas?"],
+            relatedTopics: ["metta", "compassion", "meditation"],
+            citations: ["Metta Sutta (SN 1.8)", "Visuddhimagga"],
+            difficulty: "intermediate",
+            excerpts: ["Here, monks, a disciple dwells pervading one direction with his heart filled with loving-kindness, likewise the second, the third, and the fourth direction; so above, below and around; he dwells pervading the entire world everywhere and equally with his heart filled with loving-kindness, abundant, grown great, measureless, free from enmity and free from distress."]
+        },
