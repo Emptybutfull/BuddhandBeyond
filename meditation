@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meditation - My Buddhist Website</title>
+    <style>
+        /* Copy the style from index.html here */
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Meditation Practices</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="teachings.html">Teachings</a></li>
+            <li><a href="meditation.html">Meditation</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h2>Introduction to Meditation</h2>
+        <p>Meditation is a central practice in Buddhism, helping practitioners develop mindfulness, concentration, and insight.</p>
+        <h3>Basic Meditation Instructions</h3>
+        <ol>
+            <li>Find a quiet place to sit comfortably.</li>
+            <li>Close your eyes and focus on your breath.</li>
+            <li>When your mind wanders, gently bring your attention back to your breath.</li>
+            <li>Start with 5-10 minutes and gradually increase your practice time.</li>
+        </ol>
+        <h3>Types of Buddhist Meditation</h3>
+        <ul>
+            <li>Mindfulness Meditation (Vipassana)</li>
+            <li>Loving-Kindness Meditation (Metta)</li>
+            <li>Zen Meditation (Zazen)</li>
+        </ul>
+    </main>
+    <footer>
+        <p>&copy; 2024 My Buddhist Website. May all beings be happy.</p>
+    </footer>
+</body>
+</html>
