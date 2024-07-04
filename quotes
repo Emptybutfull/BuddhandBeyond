@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buddhist Quotes from Various Traditions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #50b3a2;
+        }
+        .quote {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-left: 5px solid #50b3a2;
+        }
+        .quote p {
+            margin: 0;
+            font-style: italic;
+        }
+        .quote .source {
+            margin-top: 5px;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Buddhist Quotes from Various Traditions</h1>
+
+        <h2>Basic Buddhist Teachings</h2>
+        <div class="quote">
+            <p>"Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment."</p>
+            <div class="source">- Buddha</div>
+        </div>
+        <div class="quote">
+            <p>"Hatred does not cease by hatred, but only by love; this is the eternal rule."</p>
+            <div class="source">- Buddha (Dhammapada)</div>
+        </div>
+        <div class="quote">
+            <p>"Peace comes from within. Do not seek it without."</p>
+            <div class="source">- Buddha</div>
+        </div>
+        <div class="quote">
+            <p>"The mind is everything. What you think you become."</p>
+            <div class="source">- Buddha</div>
+        </div>
+        <div class="quote">
+            <p>"Three things cannot be long hidden: the sun, the moon, and the truth."</p>
+            <div class="source">- Buddha</div>
+        </div>
+
+        <h2>Theravada Buddhism</h2>
+        <div class="quote">
+            <p>"As a water bead on a lotus leaf, as water on a red lily, does not adhere, so the sage does not adhere to the seen, the heard, or the sensed."</p>
+            <div class="source">- Sutta Nipata</div>
+        </div>
+        <div class="quote">
+            <p>"The root of suffering is attachment."</p>
+            <div class="source">- Buddha</div>
+        </div>
+        <div class="quote">
+            <p>"Be a lamp unto yourself."</p>
+            <div class="source">- Buddha (Mahaparinibbana Sutta)</div>
+        </div>
+        <div class="quote">
+            <p>"Ardently do today what must be done. Who knows? Tomorrow, death comes."</p>
+            <div class="source">- Bhaddekaratta Sutta</div>
+        </div>
+        <div class="quote">
+            <p>"To be idle is a short road to death and to be diligent is a way of life; foolish people are idle, wise people are diligent."</p>
+            <div class="source">- Buddha</div>
+        </div>
+
+        <h2>Mahayana Buddhism</h2>
+        <div class="quote">
+            <p>"If you light a lamp for somebody, it will also brighten your path."</p>
+            <div class="source">- Buddha</div>
+        </div>
+        <div class="quote">
+            <p>"Regard this fleeting world like this: Like stars fading and vanishing at dawn, like bubbles on a fast-moving stream, like morning dewdrops evaporating on blades of grass, like a candle flickering in a strong wind... echoes, mirages, and phantoms, hallucinations, and like a dream."</p>
+            <div class="source">- Buddha (Diamond Sutra)</div>
+        </div>
+        <div class="quote">
+            <p>"All that we are is the result of what we have thought: it is founded on our thoughts and made up of our thoughts."</p>
+            <div class="source">- Dhammapada</div>
+        </div>
+        <div class="quote">
+            <p>"To avoid all evil, to cultivate good, and to cleanse one's mind — this is the teaching of the Buddhas."</p>
+            <div class="source">- Dhammapada</div>
+        </div>
+        <div class="quote">
+            <p>"Just as a mother would protect her only child with her life, even so let one cultivate a boundless love towards all beings."</p>
+            <div class="source">- Karaniya Metta Sutta</div>
+        </div>
+
+        <h2>Zen Buddhism</h2>
+        <div class="quote">
+            <p>"If you understand, things are just as they are; if you do not understand, things are just as they are."</p>
+            <div class="source">- Zen Proverb</div>
+        </div>
+        <div class="quote">
+            <p>"The obstacle is the path."</p>
+            <div class="source">- Zen Proverb</div>
+        </div>
+        <div class="quote">
+            <p>"When you realize nothing is lacking, the whole world belongs to you."</p>
+            <div class="source">- Lao Tzu</div>
+        </div>
+        <div class="quote">
+            <p>"Before enlightenment, chop wood, carry water. After enlightenment, chop wood, carry water."</p>
+            <div class="source">- Zen Proverb</div>
+        </div>
+        <div class="quote">
+            <p>"The instant you speak about a thing, you miss the mark."</p>
+            <div class="source">- Zen Proverb</div>
+        </div>
+
+        <h2>Vajrayana Buddhism</h2>
+        <div class="quote">
+            <p>"The nature of mind is the nature of everything."</p>
+            <div class="source">- Padmasambhava</div>
+        </div>
+        <div class="quote">
+            <p>"If you want to know your past life, look into your present condition; if you want to know your future life, look at your present actions."</p>
+            <div class="source">- Padmasambhava</div>
+        </div>
+        <div class="quote">
+            <p>"The true sign of a practitioner is that he or she is constantly applying the teachings to tame the mind."</p>
+            <div class="source">- Dilgo Khyentse Rinpoche</div>
+        </div>
+        <div class="quote">
+            <p>"The everyday practice is simply to develop a complete acceptance and openness to all situations and emotions, and to all people, experiencing everything totally without mental reservations and blockages, so that one never withdraws or centralizes into oneself."</p>
+            <div class="source">- Chögyam Trungpa Rinpoche</div>
+        </div>
+        <div class="quote">
+            <p>"The ultimate goal of Buddhism is not to create a system of beliefs, but to reach enlightenment."</p>
+            <div class="source">- Dalai Lama</div>
+        </div>
+
+        <h2>Contemporary Buddhist Teachers</h2>
+        <div class="quote">
+            <p>"The most fundamental aggression to ourselves, the most fundamental harm we can do to ourselves, is to remain ignorant by not having the courage and the respect to look at ourselves honestly and gently."</p>
+            <div class="source">- Pema Chödrön</div>
+        </div>
+        <div class="quote">
+            <p>"Breathing in, I calm body and mind. Breathing out, I smile. Dwelling in the present moment I know this is the only moment."</p>
+            <div class="source">- Thich Nhat Hanh</div>
+        </div>
+        <div class="quote">
+            <p>"If you want to fly, give up everything that weighs you down."</p>
+            <div class="source">- Buddha</div>
+        </div>
+        <div class="quote">
+            <p>"You are the sky. Everything else is just the weather."</p>
+            <div class="source">- Pema Chödrön</div>
+        </div>
+        <div class="quote">
+            <p>"The only way to bring peace to the earth is to learn to make our own life peaceful."</p>
+            <div class="source">- Buddha</div>
+        </div>
+
+        <h2>Advanced Buddhist Concepts</h2>
+        <div class="quote">
+            <p>"Form is emptiness, emptiness is form."</p>
+            <div class="source">- Heart Sutra</div>
+        </div>
+        <div class="quote">
+            <p>"All compounded things are subject to decay. Strive for your own liberation with diligence."</p>
+            <div class="source">- Buddha's last words</div>
+        </div>
+        <div class="quote">
+            <p>"The fundamental delusion of humanity is to suppose that I am here and you are out there."</p>
+            <div class="source">- Yasutani Roshi</div>
+        </div>
+        <div class="quote">
+            <p>"The true meaning of the precepts is not just to do no harm, but to actively do good."</p>
+            <div class="source">- Thich Nhat Hanh</div>
+        </div>
+        <div class="quote">
+            <p>"In the sky, there is no distinction of east and west; people create distinctions out of their own minds and then believe them to be true."</p>
+            <div class="source">- Buddha</div>
+        </div>
+
+        <!-- Add more quotes here to reach a total of 60 -->
+
+    </div>
+</body>
+</html>
