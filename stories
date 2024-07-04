@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Buddhist Stories Collection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #50b3a2;
+        }
+        .story-category {
+            margin-bottom: 20px;
+        }
+        .story-title {
+            cursor: pointer;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+        .story-content {
+            display: none;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+        .story-title:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Comprehensive Buddhist Stories Collection</h1>
+
+    <div id="story-container"></div>
+
+    <script>
+    const buddhistStories = {
+        "Jataka Tales": [
+            {
+                title: "The Monkey King",
+                content: "The Bodhisattva was born as a monkey king and sacrificed his life to save his troop, demonstrating selflessness and leadership."
+            },
+            {
+                title: "The Hungry Tigress",
+                content: "A prince encounters a starving tigress about to eat her cubs. He sacrifices his body to feed her, exemplifying extreme compassion."
+            },
+            {
+                title: "The Golden Swan",
+                content: "A golden swan befriends a queen, bringing her golden feathers. When greed overtakes her, she loses the swan's friendship, teaching the dangers of greed."
+            }
+        ],
+        "Zen Koans and Parables": [
+            {
+                title: "The Sound of One Hand Clapping",
+                content: "A famous Zen koan asking students to contemplate the sound of one hand clapping, designed to break through logical thinking."
+            },
+            {
+                title: "The Cup of Tea",
+                content: "Zen master Nan-in serves tea to a professor, overfilling the cup to demonstrate that like the cup, the professor's mind is too full to receive new teachings."
+            },
+            {
+                title: "The Finger Pointing at the Moon",
+                content: "Buddha warns not to mistake the finger pointing at the moon for the moon itself, teaching not to confuse concepts with reality."
+            }
+        ],
+        "Theravada Stories": [
+            {
+                title: "Angulimala's Transformation",
+                content: "A violent bandit who wore a necklace of fingers is transformed by the Buddha's teachings, becoming a monk and attaining enlightenment."
+            },
+            {
+                title: "Kisagotami and the Mustard Seed",
+                content: "A grieving mother learns the universality of death when Buddha asks her to find a house untouched by death to get mustard seeds to revive her dead child."
+            },
+            {
+                title: "The Blind Men and the Elephant",
+                content: "Blind men touch different parts of an elephant and argue about its nature, illustrating the limits of individual perception and the nature of truth."
+            }
+        ],
+        "Mahayana Sutras": [
+            {
+                title: "Vimalakirti's Thunderous Silence",
+                content: "When asked about non-duality, the layman Vimalakirti remains silent, demonstrating that ultimate truth transcends words and concepts."
+            },
+            {
+                title: "The Burning House",
+                content: "From the Lotus Sutra, a parable where a father lures his children out of a burning house with the promise of toy carts, representing skillful means in Buddhist teaching."
+            },
+            {
+                title: "Kshitigarbha's Vow",
+                content: "Bodhisattva Kshitigarbha vows not to achieve Buddhahood until all the hells are emptied, symbolizing infinite compassion and the bodhisattva ideal."
+            }
+        ],
+        "Tibetan Buddhist Tales": [
+            {
+                title: "Milarepa's Perseverance",
+                content: "The story of Milarepa's arduous journey from a murderer to an enlightened yogi through intense practice and unwavering devotion."
+            },
+            {
+                title: "The Life of Padmasambhava",
+                content: "Legendary account of Padmasambhava bringing Buddhism to Tibet, subduing local deities, and hiding terma teachings for future generations."
+            },
+            {
+                title: "Yeshe Tsogyal's Enlightenment",
+                content: "The principal consort of Padmasambhava achieves enlightenment through tantric practices, becoming a great teacher in her own right."
+            }
+        ],
+        "Chan Buddhist Stories": [
+            {
+                title: "Huineng and the Flag",
+                content: "Two monks argue whether the flag or the wind is moving. Huineng intervenes, stating it is the mind that moves, illustrating the nature of perception."
+            },
+            {
+                title: "Mazu's Wild Fox",
+                content: "A Zen master is reborn as a wild fox for 500 lives for mistakenly saying an enlightened person is not subject to cause and effect."
+            },
+            {
+                title: "Zhaozhou's Dog",
+                content: "When asked if a dog has Buddha nature, Zen master Zhaozhou responds 'Wu' (No), creating a famous koan that challenges dualistic thinking."
+            }
+        ],
+        "Contemporary Buddhist Tales": [
+            {
+                title: "Thich Nhat Hanh's Tangerine",
+                content: "Thich Nhat Hanh teaches mindfulness by slowly eating a tangerine, fully experiencing each sensation and connecting with the fruit's journey."
+            },
+            {
+                title: "The Dalai Lama's Watch",
+                content: "A story about the Dalai Lama repairing his own watch, demonstrating humility and the value of practical skills alongside spiritual practice."
+            },
+            {
+                title: "Ajahn Chah's Glass",
+                content: "Ajahn Chah teaches impermanence by considering a glass already broken, allowing full appreciation without attachment."
+            }
+        ]
+    };
+
+    function createStoryList() {
+        const container = document.getElementById('story-container');
+        for (let category in buddhistStories) {
+            const categoryDiv = document.createElement('div');
+            categoryDiv.className = 'story-category';
+            categoryDiv.innerHTML = `<h2>${category}</h2>`;
+            
+            buddhistStories[category].forEach(story => {
+                const storyDiv = document.createElement('div');
+                storyDiv.innerHTML = `
+                    <div class="story-title">${story.title}</div>
+                    <div class="story-content">${story.content}</div>
+                `;
+                categoryDiv.appendChild(storyDiv);
+            });
+            
+            container.appendChild(categoryDiv);
+        }
+
+        // Add click event listeners to story titles
+        document.querySelectorAll('.story-title').forEach(title => {
+            title.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                content.style.display = content.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+    }
+
+    createStoryList();
+    </script>
+</body>
+</html>
