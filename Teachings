@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buddhist Teachings - My Buddhist Website</title>
+    <style>
+        /* Copy the style from index.html here */
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Buddhist Teachings</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="teachings.html">Teachings</a></li>
+            <li><a href="meditation.html">Meditation</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h2>Core Buddhist Teachings</h2>
+        <h3>The Four Noble Truths</h3>
+        <ol>
+            <li>The truth of suffering (Dukkha)</li>
+            <li>The truth of the origin of suffering (Samudāya)</li>
+            <li>The truth of the cessation of suffering (Nirodha)</li>
+            <li>The truth of the path to the cessation of suffering (Magga)</li>
+        </ol>
+        <h3>The Eightfold Path</h3>
+        <ul>
+            <li>Right Understanding</li>
+            <li>Right Intention</li>
+            <li>Right Speech</li>
+            <li>Right Action</li>
+            <li>Right Livelihood</li>
+            <li>Right Effort</li>
+            <li>Right Mindfulness</li>
+            <li>Right Concentration</li>
+        </ul>
+    </main>
+    <footer>
+        <p>&copy; 2024 My Buddhist Website. May all beings be happy.</p>
+    </footer>
+</body>
+</html>
