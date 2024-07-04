@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Non-Self (Anatta) - Interactive Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #50b3a2;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #50b3a2;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #3a8c7d;
+        }
+        #feedback {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Understanding Non-Self (Anatta)</h1>
+        <div id="game-area">
+            <div id="question" class="question"></div>
+            <div id="answers"></div>
+        </div>
+        <div id="feedback"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What do you think 'self' means?",
+                answers: [
+                    { text: "A permanent, unchanging essence within me", feedback: "This view aligns with a belief in a permanent self. Consider: Is there anything about you that never changes?", score: -1 },
+                    { text: "My thoughts, feelings, and experiences", feedback: "Interesting! Are these constant or do they change? What makes them 'you'?", score: 0 },
+                    { text: "A collection of ever-changing processes", feedback: "This perspective aligns closely with the Buddhist concept of non-self. How does this idea make you feel?", score: 1 },
+                    { text: "I'm not sure", feedback: "That's okay! Questioning the nature of self is the first step. Let's explore further.", score: 0 }
+                ]
+            },
+            {
+                question: "When you look within, can you find a permanent, unchanging 'you'?",
+                answers: [
+                    { text: "Yes, there's a core 'me' that never changes", feedback: "Interesting. Can you think of any aspect of yourself that has remained absolutely constant throughout your life?", score: -1 },
+                    { text: "No, everything seems to be constantly changing", feedback: "This observation aligns with the Buddhist teaching of impermanence and non-self. How does this realization affect your view of yourself?", score: 1 },
+                    { text: "I'm not sure how to look for a 'self'", feedback: "That's a profound realization! The difficulty in finding a 'self' is itself a step towards understanding non-self.", score: 0 },
+                    { text: "I've never really thought about it before", feedback: "This is a great opportunity to start exploring! Pay attention to your thoughts, feelings, and experiences. Do they feel permanent or changing?", score: 0 }
+                ]
+            },
+            {
+                question: "If your memories, personality, and body are constantly changing, what remains that you can call a permanent 'self'?",
+                answers: [
+                    { text: "My soul or spirit", feedback: "Many traditions believe in a soul, but Buddhism challenges this idea. Can you perceive or locate this soul? Is it affected by your experiences?", score: -1 },
+                    { text: "My consciousness or awareness", feedback: "Consciousness is indeed central to our experience, but is it permanent and unchanging? Does it exist in deep sleep?", score: 0 },
+                    { text: "Nothing - there is no permanent self", feedback: "This aligns with the Buddhist teaching of anatta or non-self. How does this understanding change your perspective on life?", score: 1 },
+                    { text: "I'm not sure", feedback: "Uncertainty can be a powerful tool for exploration. What aspects of yourself feel most permanent to you? Are they truly unchanging?", score: 0 }
+                ]
+            },
+            {
+                question: "How does the idea of non-self (anatta) make you feel?",
+                answers: [
+                    { text: "Scared or anxious", feedback: "It's natural to feel this way. Remember, non-self doesn't mean you don't exist, but that you exist interdependently and are always changing. How might this be liberating?", score: 0 },
+                    { text: "Confused", feedback: "Non-self is a complex concept. It might help to think of yourself as a process rather than a fixed entity. How does this change your perspective?", score: 0 },
+                    { text: "Liberated or peaceful", feedback: "Many find the idea of non-self freeing. Without a fixed self, we're free to grow and change. How might this understanding reduce suffering?", score: 1 },
+                    { text: "Skeptical or unconvinced", feedback: "Skepticism is valuable in Buddhist practice. Keep questioning and observing your experience. Can you find any aspect of yourself that never changes?", score: 0 }
+                ]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function displayQuestion() {
+            const questionEl = document.getElementById('question');
+            const answersEl = document.getElementById('answers');
+            const currentQ = questions[currentQuestion];
+
+            questionEl.textContent = currentQ.question;
+            answersEl.innerHTML = '';
+
+            currentQ.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.textContent = answer.text;
+                button.onclick = () => selectAnswer(answer);
+                answersEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(answer) {
+            score += answer.score;
+            const feedbackEl = document.getElementById('feedback');
+            feedbackEl.textContent = answer.feedback;
+
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    displayQuestion();
+                } else {
+                    endGame();
+                }
+            }, 3000);
+        }
+
+        function endGame() {
+            const gameArea = document.getElementById('game-area');
+            const feedbackEl = document.getElementById('feedback');
+
+            gameArea.innerHTML = '<h2>Game Over</h2>';
+            if (score >= 2) {
+                feedbackEl.textContent = "Congratulations! You've shown a deep understanding of the concept of non-self (anatta). Remember, this is just the beginning of a profound journey of self-discovery and liberation.";
+            } else {
+                feedbackEl.textContent = "Thank you for exploring the concept of non-self (anatta). This is a complex idea that often takes time and reflection to fully grasp. Keep questioning and observing your experience!";
+            }
+        }
+
+        displayQuestion();
+    </script>
+</body>
+</html>
