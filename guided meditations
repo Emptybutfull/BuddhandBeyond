@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Buddhist Meditation Guide</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        h1, h2 {
+            color: #4a4a4a;
+            text-align: center;
+        }
+        .meditation {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .symbol {
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .timer {
+            text-align: center;
+            font-size: 1.5em;
+            margin: 20px 0;
+        }
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        audio {
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧘 Comprehensive Buddhist Meditation Guide 🧘‍♀️</h1>
+
+    <div class="meditation">
+        <div class="symbol">🌬️</div>
+        <h2>Anapanasati (Mindfulness of Breathing)</h2>
+        <p><strong>Tradition:</strong> Theravada</p>
+        <p><strong>Instructions:</strong></p>
+        <ol>
+            <li>Sit comfortably with your back straight. You can be on a cushion on the floor or in a chair.</li>
+            <li>Close your eyes and take a few deep breaths to settle your body and mind.</li>
+            <li>Bring your attention to your breath. Notice the sensation of the breath entering and leaving your nostrils.</li>
+            <li>Don't try to control your breath; simply observe it as it is.</li>
+            <li>When your mind wanders (and it will), gently bring your attention back to your breath without judgment.</li>
+            <li>Continue this practice for the duration of the meditation.</li>
+        </ol>
+        <div class="timer">
+            <span id="time1">20:00</span>
+            <button onclick="startTimer(1200, 'time1', 'audio1')">Start 20-Minute Meditation</button>
+        </div>
+        <audio id="audio1" src="https://example.com/path/to/calm-bell-sound.mp3"></audio>
+    </div>
+
+    <div class="meditation">
+        <div class="symbol">❤️</div>
+        <h2>Metta Bhavana (Loving-Kindness Meditation)</h2>
+        <p><strong>Tradition:</strong> Theravada/Mahayana</p>
+        <p><strong>Instructions:</strong></p>
+        <ol>
+            <li>Sit comfortably and take a few deep breaths to center yourself.</li>
+            <li>Begin by generating feelings of loving-kindness towards yourself. Repeat silently:
+                <br>"May I be happy. May I be well. May I be safe. May I be peaceful and at ease."</li>
+            <li>Next, bring to mind a beloved person and direct the same wishes to them.</li>
+            <li>Then, think of a neutral person (someone you neither like nor dislike) and wish them well.</li>
+            <li>Now, think of a difficult person in your life and try to extend loving-kindness to them.</li>
+            <li>Finally, extend your loving-kindness to all beings everywhere:
+                <br>"May all beings be happy. May all beings be well. May all beings be safe. May all beings be peaceful and at ease."</li>
+        </ol>
+        <div class="timer">
+            <span id="time2">15:00</span>
+            <button onclick="startTimer(900, 'time2', 'audio2')">Start 15-Minute Meditation</button>
+        </div>
+        <audio id="audio2" src="https://example.com/path/to/gentle-chimes.mp3"></audio>
+    </div>
+
+    <div class="meditation">
+        <div class="symbol">🏔️</div>
+        <h2>Zazen (Seated Meditation)</h2>
+        <p><strong>Tradition:</strong> Zen</p>
+        <p><strong>Instructions:</strong></p>
+        <ol>
+            <li>Sit on a cushion in full or half lotus position, or in a chair with your feet flat on the floor.</li>
+            <li>Keep your back straight, as if an invisible string were pulling you up from the crown of your head.</li>
+            <li>Rest your hands in your lap in the cosmic mudra: left hand on top of right, palms up, thumbs touching to form an oval.</li>
+            <li>Lower your gaze and keep your eyes half-open, focused on a point on the floor about 3 feet in front of you.</li>
+            <li>Breathe naturally through your nose.</li>
+            <li>Simply sit, allowing thoughts to come and go without engaging with them. If you get caught up in thought, gently return to your posture and breath.</li>
+        </ol>
+        <div class="timer">
+            <span id="time3">25:00</span>
+            <button onclick="startTimer(1500, 'time3', 'audio3')">Start 25-Minute Meditation</button>
+        </div>
+        <audio id="audio3" src="https://example.com/path/to/zen-bell.mp3"></audio>
+    </div>
+
+    <div class="meditation">
+        <div class="symbol">🕉️</div>
+        <h2>Vipassana (Insight Meditation)</h2>
+        <p><strong>Tradition:</strong> Theravada</p>
+        <p><strong>Instructions:</strong></p>
+        <ol>
+            <li>Sit comfortably with your back straight.</li>
+            <li>Close your eyes and take a few deep breaths to settle yourself.</li>
+            <li>Begin by focusing on your breath, noticing the sensations of breathing in your abdomen or nostrils.</li>
+            <li>As you become more settled, expand your awareness to include all sensations in your body.</li>
+            <li>Notice sensations as they arise - heat, cold, pressure, tingling, etc. Don't judge them, simply observe.</li>
+            <li>If thoughts or emotions arise, notice them too. Label them simply as "thinking" or "feeling" and return to observing sensations.</li>
+            <li>Continue this practice of moment-to-moment awareness, developing insight into the changing nature of all phenomena.</li>
+        </ol>
+        <div class="timer">
+            <span id="time4">30:00</span>
+            <button onclick="startTimer(1800, 'time4', 'audio4')">Start 30-Minute Meditation</button>
+        </div>
+        <audio id="audio4" src="https://example.com/path/to/tibetan-singing-bowl.mp3"></audio>
+    </div>
+
+    <div class="meditation">
+        <div class="symbol">🔔</div>
+        <h2>Tonglen (Giving and Taking)</h2>
+        <p><strong>Tradition:</strong> Tibetan</p>
+        <p><strong>Instructions:</strong></p>
+        <ol>
+            <li>Sit comfortably and take a few deep breaths to center yourself.</li>
+            <li>Visualize someone who is suffering (this could be yourself, a loved one, or even all beings).</li>
+            <li>As you inhale, imagine you are taking in their suffering as a dark cloud.</li>
+            <li>As you exhale, imagine sending them relief and happiness in the form of bright light.</li>
+            <li>Continue this rhythm of breathing in suffering and breathing out relief.</li>
+            <li>If it becomes overwhelming, return to normal breathing and then resume when ready.</li>
+            <li>Gradually expand your practice to include more and more beings.</li>
+        </ol>
+        <div class="timer">
+            <span id="time5">20:00</span>
+            <button onclick="startTimer(1200, 'time5', 'audio5')">Start 20-Minute Meditation</button>
+        </div>
+        <audio id="audio5" src="https://example.com/path/to/tibetan-flute.mp3"></audio>
+    </div>
+
+    <script>
+        function startTimer(duration, displayId, audioId) {
+            var timer = duration, minutes, seconds;
+            var display = document.getElementById(displayId);
+            var interval = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(interval);
+                    display.textContent = "Done!";
+                    document.getElementById(audioId).play();
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
