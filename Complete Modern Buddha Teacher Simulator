@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Buddha Teacher Simulator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #50b3a2;
+        }
+        input, button, select {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #50b3a2;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #3a8c7d;
+        }
+        #response, #follow-up, #related-topics, #citations, #excerpts {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-left: 5px solid #50b3a2;
+            border-radius: 4px;
+        }
+        .follow-up-btn, .related-topic-btn {
+            background-color: #50b3a2;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 20px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .follow-up-btn:hover, .related-topic-btn:hover {
+            background-color: #3a8c7d;
+            transform: translateY(-2px);
+        }
+        .difficulty {
+            font-size: 0.8em;
+            color: #666;
+            font-style: italic;
+        }
+        #progress {
+            margin-top: 20px;
+            background-color: #e0e0e0;
+            border-radius: 20px;
+            height: 10px;
+            overflow: hidden;
+        }
+        #progress-bar {
+            height: 100%;
+            background-color: #50b3a2;
+            width: 0%;
+            transition: width 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Modern Buddha Teacher Simulator</h1>
+        <p>Ask a question about Buddhism and receive teachings from various traditions.</p>
+        
+        <select id="difficulty-filter">
+            <option value="all">All Levels</option>
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+        </select>
+        
+        <input type="text" id="question" placeholder="Ask your question here">
+        <button onclick="askBuddha()">Ask the Buddha</button>
+        
+        <div id="response"></div>
+        <div id="follow-up"></div>
+        <div id="related-topics"></div>
+        <div id="citations"></div>
+        <div id="excerpts"></div>
+        
+        <h3>Exploration Progress</h3>
+        <div id="progress"><div id="progress-bar"></div></div>
+    </div>
+
+    <script>
+    const buddhaTeachings = {
+        "four noble truths": {
+            content: "The Four Noble Truths are the foundation of Buddhist thought. They are: 1) The truth of suffering (dukkha), 2) The truth of the cause of suffering (samudaya), 3) The truth of the end of suffering (nirodha), and 4) The truth of the path that leads to the end of suffering (magga).",
+            followUp: ["Can you explain each Noble Truth in more detail?", "How do the Four Noble Truths relate to daily life?"],
+            relatedTopics: ["eightfold path", "dukkha", "nirvana"],
+            citations: ["Dhammacakkappavattana Sutta (SN 56.11)", "Maha-parinibbana Sutta (DN 16)"],
+            difficulty: "beginner",
+            excerpts: ["Thus have I heard. On one occasion the Blessed One was dwelling at Benares in the Deer Park at Isipatana. There the Blessed One addressed the bhikkhus of the group of five thus: 'Bhikkhus, these two extremes should not be followed by one who has gone forth into homelessness...'"]
+        },
+        "eightfold path": {
+            content: "The Noble Eightfold Path is the way to the end of suffering. It consists of: Right View, Right Intention, Right Speech, Right Action, Right Livelihood, Right Effort, Right Mindfulness, and Right Concentration.",
+            followUp: ["Can you explain each factor of the Eightfold Path?", "How does one practice the Eightfold Path in daily life?"],
+            relatedTopics: ["four noble truths", "meditation", "ethics"],
+            citations: ["Magga-vibhanga Sutta (SN 45.8)", "Maha-cattarisaka Sutta (MN 117)"],
+            difficulty: "beginner",
+            excerpts: ["And what, monks, is right view? Knowledge of suffering, knowledge of the origin of suffering, knowledge of the cessation of suffering, knowledge of the way leading to the cessation of suffering: this is called right view."]
+        },
+        "meditation": {
+            content: "Meditation is a crucial practice in Buddhism. It includes techniques for cultivating mindfulness, concentration, and insight. Two primary forms are samatha (calm abiding) and vipassana (insight meditation).",
+            followUp: ["What's the difference between samatha and vipassana?", "How does one start a meditation practice?"],
+            relatedTopics: ["mindfulness", "concentration", "insight"],
+            citations: ["Anapanasati Sutta (MN 118)", "Satipatthana Sutta (MN 10)"],
+            difficulty: "beginner",
+            excerpts: ["And how, monks, does a monk develop mindfulness of breathing? Here a monk, having gone to the forest, to the foot of a tree, or to an empty place, sits down cross-legged, holds his body erect, and establishes mindfulness in front of him, ever mindful he breathes in, mindful he breathes out."]
+        },
+        "karma": {
+            content: "Karma is the law of moral causation. It refers to the principle that our actions have consequences, both in this life and in future lives. Good actions lead to positive results, while negative actions lead to suffering.",
+            followUp: ["How does karma affect rebirth?", "Can karma be changed or its effects mitigated?"],
+            relatedTopics: ["rebirth", "ethics", "dependent origination"],
+            citations: ["Culakammavibhanga Sutta (MN 135)", "Nibbedhika Sutta (AN 6.63)"],
+            difficulty: "intermediate",
+            excerpts: ["Beings are owners of their actions, heirs of their actions; they originate from their actions, are bound to their actions, have their actions as their refuge. It is action that distinguishes beings as inferior and superior."]
+        },
+        "emptiness": {
+            content: "Emptiness (Sunyata) is a key concept in Mahayana Buddhism. It refers to the lack of inherent existence in all phenomena. Understanding emptiness leads to liberation from suffering and the realization of Buddha nature.",
+            followUp: ["How does emptiness relate to dependent origination?", "What are the practical implications of emptiness?"],
+            relatedTopics: ["dependent origination", "non-self", "mahayana"],
+            citations: ["Heart Sutra", "Mulamadhyamakakarika by Nagarjuna"],
+            difficulty: "advanced",
+            excerpts: ["Form is emptiness, emptiness is form. Emptiness is not other than form, form is not other than emptiness."]
+        },
+        "default": {
+            content: "The path to enlightenment is one of personal discovery. Reflect deeply on your question, practice mindfulness, and seek understanding through compassion and wisdom. The answer you seek may reveal itself through your own Buddha nature.",
+            followUp: ["Would you like to know more about meditation practices?", "Are you interested in learning about the Four Noble Truths?"],
+            relatedTopics: ["four noble truths", "meditation", "mindfulness"],
+            citations: ["Dhammapada", "Sutta Nipata"],
+            difficulty: "beginner",
+            excerpts: ["By oneself is evil done; by oneself is one defiled. By oneself is evil left undone; by oneself is one made pure. Purity and impurity depend on oneself; no one can purify another."]
+        }
+    };
+
+    let exploredTopics = new Set();
+
+    function tokenize(text) {
+        return text.toLowerCase().match(/\b(\w+)\b/g);
+    }
+
+    function removeStopwords(tokens) {
+        const stopwords = new Set(['a', 'an', 'and', 'are', 'as', 'at', 'be', 'by', 'for', 'from', 'has', 'he', 'in', 'is', 'it',
+            'its', 'of', 'on', 'that', 'the', 'to', 'was', 'were', 'will', 'with', 'what', 'where', 'when', 'how', 'why']);
+        return tokens.filter(token => !stopwords.has(token));
+    }
+
+    function stemWord(word) {
+        const suffixes = ['ing', 'ly', 'ed', 'es', 's', 'ment'];
+        for (let suffix of suffixes) {
+            if (word.endsWith(suffix)) {
+                return word.slice(0, -suffix.length);
+            }
+        }
+        return word;
+    }
+
+    function processText(text) {
+        const tokens = tokenize(text);
+        const withoutStopwords = removeStopwords(tokens);
+        return withoutStopwords.map(stemWord);
+    }
+
+    function findBestMatch(processedQuestion, teachings) {
+        let bestMatch = null;
+        let highestScore = 0;
+
+        for (let [topic, data] of Object.entries(teachings)) {
+            const topicTokens = processText(topic);
+            const score = processedQuestion.filter(token => topicTokens.includes(token)).length;
+
+            if (score > highestScore) {
+                highestScore = score;
+                bestMatch = topic;
+            }
+        }
+
+        return bestMatch || 'default';
+    }
+
+    function askBuddha() {
+        const question = document.getElementById('question').value;
+        const responseElement = document.getElementById('response');
+        const followUpElement = document.getElementById('follow-up');
+        const relatedTopicsElement = document.getElementById('related-topics');
+        const citationsElement = document.getElementById('citations');
+        const excerptElement = document.getElementById('excerpts');
+
+        const difficultyFilter = document.getElementById('difficulty-filter').value;
+        const processedQuestion = processText(question);
+        const bestMatch = findBestMatch(processedQuestion, buddhaTeachings);
+        
+        const response = buddhaTeachings[bestMatch];
+
+        if (difficultyFilter === 'all' || response.difficulty === difficultyFilter) {
+            responseElement.innerHTML = `<strong>Buddha:</strong> ${response.content}`;
+
+            // Follow-up questions
+            followUpElement.innerHTML = "<h3>Follow-up Questions:</h3>";
+            response.followUp.forEach(question => {
+                const button = document.createElement('button');
+                button.textContent = question;
+                button.className = 'follow-up-btn';
+                button.onclick = () => {
+                    document.getElementById('question').value = question;
+                    askBuddha();
+                };
+                followUpElement.appendChild(button);
+            });
+
+            // Related topics
+            relatedTopicsElement.innerHTML = "<h3>Related Topics:</h3>";
+            response.relatedTopics.forEach(topic => {
+                const button = document.createElement('button');
+                button.textContent = topic;
+                button.className = 'related-topic-btn';
+                button.onclick = () => {
+                    document.getElementById('question').value = `Tell me about ${topic}`;
+                    askBuddha();
+                };
+                relatedTopicsElement.appendChild(button);
+            });
+
+            // Citations
+            citationsElement.innerHTML = "<h3>Further Reading:</h3><ul>";
+            response.citations.forEach(citation => {
+                citationsElement.innerHTML += `<li>${citation}</li>`;
+            });
+            citationsElement.innerHTML += "</ul>";
+
+            // Excerpts
+            excerptElement.innerHTML = "<h3>Excerpt:</h3>";
+            excerptElement.innerHTML += `<p>${response.excerpts[0]}</p>`;
+
+            // Update explored topics
+            exploredTopics.add(bestMatch);
+            updateProgress();
+        } else {
+            responseElement.innerHTML = "I'm sorry, but this teaching doesn't match the selected difficulty level. Please try a different question or adjust the difficulty filter.";
+            followUpElement.innerHTML = "";
+            relatedTopicsElement.innerHTML = "";
+            citationsElement.innerHTML = "";
+            excerptElement.innerHTML = "";
+        }
+    }
+
+    function updateProgress() {
+        const progressBar = document.getElementById('progress-bar');
+        const progress = (exploredTopics.size / Object.keys(buddhaTeachings).length) * 100;
+        progressBar.style.width = `${progress}%`;
+    }
+
+    // Initialize progress bar
+    updateProgress();
+    </script>
+</body>
+</html>
