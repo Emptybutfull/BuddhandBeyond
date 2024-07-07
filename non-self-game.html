@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Understanding Non-Self (Anatta) - Interactive Game</title>
+    <title>Journey to Non-Self: An Adaptive Experience</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -20,7 +20,7 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        h1 {
+        h1, h2 {
             color: #50b3a2;
         }
         .question {
@@ -38,9 +38,24 @@
         button:hover {
             background-color: #3a8c7d;
         }
-        #feedback {
+        #feedback, #explanation {
             margin-top: 20px;
             font-weight: bold;
+        }
+        #progress-bar {
+            width: 100%;
+            background-color: #e0e0e0;
+            padding: 3px;
+            border-radius: 3px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2);
+            margin-bottom: 20px;
+        }
+        #progress {
+            width: 0;
+            height: 20px;
+            background-color: #50b3a2;
+            border-radius: 3px;
+            transition: width 0.5s ease-in-out;
         }
         nav {
             background-color: #50b3a2;
@@ -65,110 +80,246 @@
 <body>
     <nav>
         <ul>
-            <li><a href="index.html">Home</a></li>
             <li><a href="buddhas.html">Buddhas</a></li>
+            <li><a href="Complete-Modern-Buddha-Teacher-Simulator.html">Buddha Teacher Simulator</a></li>
             <li><a href="guided-meditations.html">Guided Meditations</a></li>
             <li><a href="non-self-game.html">Non-Self Game</a></li>
             <li><a href="quotes.html">Quotes</a></li>
             <li><a href="stories.html">Stories</a></li>
             <li><a href="visualization.html">Visualization</a></li>
-            <li><a href="Complete-Modern-Buddha-Teacher-Simulator.html">Buddha Teacher Simulator</a></li>
         </ul>
     </nav>
-
     <div class="container">
-        <h1>Understanding Non-Self (Anatta)</h1>
+        <h1>Journey to Non-Self: An Adaptive Experience</h1>
+        <div id="progress-bar"><div id="progress"></div></div>
         <div id="game-area">
+            <h2 id="stage"></h2>
             <div id="question" class="question"></div>
             <div id="answers"></div>
         </div>
         <div id="feedback"></div>
+        <div id="explanation"></div>
     </div>
 
     <script>
-        const questions = [
-            {
-                question: "What do you think 'self' means?",
-                answers: [
-                    { text: "A permanent, unchanging essence within me", feedback: "This view aligns with a belief in a permanent self. Consider: Is there anything about you that never changes?", score: -1 },
-                    { text: "My thoughts, feelings, and experiences", feedback: "Interesting! Are these constant or do they change? What makes them 'you'?", score: 0 },
-                    { text: "A collection of ever-changing processes", feedback: "This perspective aligns closely with the Buddhist concept of non-self. How does this idea make you feel?", score: 1 },
-                    { text: "I'm not sure", feedback: "That's okay! Questioning the nature of self is the first step. Let's explore further.", score: 0 }
-                ]
-            },
-            {
-                question: "When you look within, can you find a permanent, unchanging 'you'?",
-                answers: [
-                    { text: "Yes, there's a core 'me' that never changes", feedback: "Interesting. Can you think of any aspect of yourself that has remained absolutely constant throughout your life?", score: -1 },
-                    { text: "No, everything seems to be constantly changing", feedback: "This observation aligns with the Buddhist teaching of impermanence and non-self. How does this realization affect your view of yourself?", score: 1 },
-                    { text: "I'm not sure how to look for a 'self'", feedback: "That's a profound realization! The difficulty in finding a 'self' is itself a step towards understanding non-self.", score: 0 },
-                    { text: "I've never really thought about it before", feedback: "This is a great opportunity to start exploring! Pay attention to your thoughts, feelings, and experiences. Do they feel permanent or changing?", score: 0 }
-                ]
-            },
-            {
-                question: "If your memories, personality, and body are constantly changing, what remains that you can call a permanent 'self'?",
-                answers: [
-                    { text: "My soul or spirit", feedback: "Many traditions believe in a soul, but Buddhism challenges this idea. Can you perceive or locate this soul? Is it affected by your experiences?", score: -1 },
-                    { text: "My consciousness or awareness", feedback: "Consciousness is indeed central to our experience, but is it permanent and unchanging? Does it exist in deep sleep?", score: 0 },
-                    { text: "Nothing - there is no permanent self", feedback: "This aligns with the Buddhist teaching of anatta or non-self. How does this understanding change your perspective on life?", score: 1 },
-                    { text: "I'm not sure", feedback: "Uncertainty can be a powerful tool for exploration. What aspects of yourself feel most permanent to you? Are they truly unchanging?", score: 0 }
-                ]
-            },
-            {
-                question: "How does the idea of non-self (anatta) make you feel?",
-                answers: [
-                    { text: "Scared or anxious", feedback: "It's natural to feel this way. Remember, non-self doesn't mean you don't exist, but that you exist interdependently and are always changing. How might this be liberating?", score: 0 },
-                    { text: "Confused", feedback: "Non-self is a complex concept. It might help to think of yourself as a process rather than a fixed entity. How does this change your perspective?", score: 0 },
-                    { text: "Liberated or peaceful", feedback: "Many find the idea of non-self freeing. Without a fixed self, we're free to grow and change. How might this understanding reduce suffering?", score: 1 },
-                    { text: "Skeptical or unconvinced", feedback: "Skepticism is valuable in Buddhist practice. Keep questioning and observing your experience. Can you find any aspect of yourself that never changes?", score: 0 }
-                ]
-            }
-        ];
+        const questions = {
+            beginner: [
+                {
+                    id: "b1",
+                    question: "When you think about yourself, what do you consider to be your 'self'?",
+                    answers: [
+                        { text: "My body", feedback: "Interesting. Is your body constant, or does it change?", nextStage: "beginner", score: 0, pattern: "material" },
+                        { text: "My thoughts and feelings", feedback: "Good observation. Do your thoughts and feelings remain the same all the time?", nextStage: "beginner", score: 0.5, pattern: "mental" },
+                        { text: "An unchanging essence within me", feedback: "Many people think this way. Can you find this unchanging essence when you look closely?", nextStage: "beginner", score: 0, pattern: "eternal" },
+                        { text: "I'm not sure", feedback: "Uncertainty is a great starting point for inquiry. Let's explore further.", nextStage: "intermediate", score: 1, pattern: "questioning" }
+                    ],
+                    explanation: "The Buddha taught that what we consider as 'self' is actually a combination of five aggregates: form, sensation, perception, mental formations, and consciousness. None of these are permanent or independent."
+                },
+                {
+                    id: "b2",
+                    question: "Have you ever noticed that your likes, dislikes, or personality traits have changed over time?",
+                    answers: [
+                        { text: "Yes, they've changed a lot", feedback: "Excellent observation. If these aspects of you change, what remains constant?", nextStage: "intermediate", score: 1, pattern: "change" },
+                        { text: "They've changed a little", feedback: "Good noticing. Even small changes can hint at the fluid nature of what we call 'self'.", nextStage: "beginner", score: 0.5, pattern: "partial_change" },
+                        { text: "No, they've stayed the same", feedback: "Interesting. Let's explore this further. Can you think of any examples from your childhood that might contradict this?", nextStage: "beginner", score: 0, pattern: "static" }
+                    ],
+                    explanation: "The principle of impermanence (anicca) is fundamental in Buddhism. It states that all conditioned phenomena are in constant flux. This includes our preferences, personality, and even our sense of self."
+                },
+                {
+                    id: "b3",
+                    question: "When you're deeply absorbed in an activity, do you feel a strong sense of 'self'?",
+                    answers: [
+                        { text: "Yes, I feel very present", feedback: "Interesting. Is this sense of self the same as your everyday self?", nextStage: "beginner", score: 0, pattern: "strong_self" },
+                        { text: "No, I forget myself", feedback: "Good observation. This 'losing oneself' can be a glimpse into non-self.", nextStage: "intermediate", score: 1, pattern: "flow" },
+                        { text: "I'm not sure", feedback: "That's okay. Pay attention to this in your daily life and see what you notice.", nextStage: "beginner", score: 0.5, pattern: "questioning" }
+                    ],
+                    explanation: "States of flow or deep absorption can provide experiential insights into non-self. When we're fully engaged, our usual sense of a separate self can diminish or disappear."
+                }
+            ],
+            intermediate: [
+                {
+                    id: "i1",
+                    question: "If your body and mind are constantly changing, what remains that you can call a permanent 'self'?",
+                    answers: [
+                        { text: "My consciousness or awareness", feedback: "Consciousness is indeed central to our experience. But is it truly unchanging? Does it exist in deep sleep?", nextStage: "intermediate", score: 0.5, pattern: "consciousness" },
+                        { text: "Nothing - there is no permanent self", feedback: "This aligns with the Buddhist teaching of anatta or non-self. How does this understanding change your perspective on life?", nextStage: "advanced", score: 1, pattern: "non_self" },
+                        { text: "My soul or essential nature", feedback: "Many traditions believe in a soul or essential nature. In Buddhism, we question whether even this is permanent or separate. Can you perceive this essence directly?", nextStage: "intermediate", score: 0, pattern: "eternal" }
+                    ],
+                    explanation: "The Buddha taught anatta, or non-self, as one of the three marks of existence. This doesn't mean we don't exist, but that there is no permanent, unchanging core that we can identify as 'self'."
+                },
+                {
+                    id: "i2",
+                    question: "How do you think the concept of non-self relates to your experiences of happiness and suffering?",
+                    answers: [
+                        { text: "It doesn't affect them", feedback: "Interesting perspective. Let's explore deeper. If there's no fixed self, who exactly is experiencing happiness or suffering?", nextStage: "intermediate", score: 0, pattern: "separate" },
+                        { text: "It might reduce suffering", feedback: "Good insight. How might letting go of a fixed self-concept reduce our suffering?", nextStage: "advanced", score: 0.5, pattern: "liberation" },
+                        { text: "It could lead to greater peace", feedback: "Excellent. Understanding non-self can indeed lead to a profound sense of peace. How do you think this works?", nextStage: "advanced", score: 1, pattern: "peace" }
+                    ],
+                    explanation: "The Buddha taught that attachment to a fixed sense of self is a primary cause of suffering. By understanding non-self, we can loosen this attachment and experience greater freedom and peace."
+                },
+                {
+                    id: "i3",
+                    question: "When you observe your thoughts, do you feel like you're choosing them, or do they just arise on their own?",
+                    answers: [
+                        { text: "I choose my thoughts", feedback: "Interesting. Try observing very closely. Can you see the moment of choosing, or does the choice itself arise as a thought?", nextStage: "intermediate", score: 0, pattern: "control" },
+                        { text: "They arise on their own", feedback: "Good observation. If thoughts arise on their own, what implications does this have for our sense of self?", nextStage: "advanced", score: 1, pattern: "flow" },
+                        { text: "Sometimes I choose, sometimes they just come", feedback: "Nuanced observation. Keep exploring this. What determines whether you choose or thoughts just arise?", nextStage: "intermediate", score: 0.5, pattern: "partial_control" }
+                    ],
+                    explanation: "In meditation, we often discover that thoughts arise spontaneously, without a clear chooser. This can be a direct insight into non-self and the conditioned nature of our mental processes."
+                }
+            ],
+            advanced: [
+                {
+                    id: "a1",
+                    question: "In the Heart Sutra, it's said that 'form is emptiness, emptiness is form.' How do you interpret this in relation to non-self?",
+                    answers: [
+                        { text: "Everything is an illusion", feedback: "While this touches on the idea, Buddhism doesn't claim things don't exist at all. Rather, it suggests they lack inherent, separate existence. How might this differ from illusion?", nextStage: "advanced", score: 0.5, pattern: "nihilism" },
+                        { text: "Our true nature is beyond form", feedback: "This points towards a deeper truth. In Mahayana, we explore how even our 'true nature' is empty of inherent existence. How does this relate to non-self?", nextStage: "advanced", score: 0.5, pattern: "transcendence" },
+                        { text: "Things exist, but not independently", feedback: "Excellent! This captures the essence of emptiness in Mahayana. How does this understanding of existence relate to the concept of non-self?", nextStage: "master", score: 1, pattern: "interdependence" }
+                    ],
+                    explanation: "The teaching on form and emptiness points to the ultimate nature of reality in Mahayana Buddhism. It suggests that while things appear, they lack independent, intrinsic existence. This applies to our sense of self as well."
+                },
+                {
+                    id: "a2",
+                    question: "How might understanding non-self change your relationships with others?",
+                    answers: [
+                        { text: "It would make them meaningless", feedback: "While non-self challenges our usual views, it doesn't negate relationships. Instead, it can lead to greater compassion as we recognize our interconnectedness.", nextStage: "advanced", score: 0, pattern: "nihilism" },
+                        { text: "It could increase empathy", feedback: "Good insight. How might seeing others as not separate from yourself foster empathy?", nextStage: "master", score: 0.5, pattern: "compassion" },
+                        { text: "It might dissolve boundaries", feedback: "Excellent. The realization of non-self can indeed blur the lines between self and other. How might this manifest in daily life?", nextStage: "master", score: 1, pattern: "unity" }
+                    ],
+                    explanation: "Understanding non-self often leads to greater compassion and connection. When we see that we're not separate, independent entities, it naturally fosters care for others, who we recognize as 'not other'."
+                },
+                {
+                    id: "a3",
+                    question: "In some Buddhist traditions, it's said that 'samsara and nirvana are non-dual'. How might this relate to non-self?",
+                    answers: [
+                        { text: "They're completely separate", feedback: "This is a common initial understanding. However, non-duality suggests a deeper relationship. How might the realization of non-self bridge samsara and nirvana?", nextStage: "advanced", score: 0, pattern: "dualism" },
+                        { text: "They're different perspectives on reality", feedback: "Good insight. How might our perception of self or non-self influence whether we experience samsara or nirvana?", nextStage: "master", score: 0.5, pattern: "perspective" },
+                        { text: "They're inherently inseparable", feedback: "Excellent. This points to a profound understanding. How might the realization of non-self reveal the non-dual nature of samsara and nirvana?", nextStage: "master", score: 1, pattern: "non_duality" }
+                    ],
+                    explanation: "The non-duality of samsara and nirvana is a advanced teaching in some Buddhist traditions. It suggests that the difference lies not in external reality, but in our perception and attachment to a sense of self."
+                }
+            ],
+            master: [
+                {
+                    id: "m1",
+                    question: "In Vajrayana Buddhism, practitioners sometimes identify with deities or enlightened beings. How can this be reconciled with the concept of non-self?",
+                    answers: [
+                        { text: "It contradicts non-self", feedback: "While it might seem contradictory, Vajrayana uses this as a skillful means. How might identifying with an enlightened being help transcend our limited sense of self?", nextStage: "master", score: 0, pattern: "conflict" },
+                        { text: "It's a method to transcend ego", feedback: "Excellent! By identifying with enlightened qualities, we can go beyond our limited self-concept. How might this deepen our understanding of non-self?", nextStage: "master", score: 1, pattern: "transcendence" },
+                        { text: "It's symbolic, not literal", feedback: "Good insight. Vajrayana indeed uses a lot of symbolism. How might this symbolic identification relate to the ultimate nature of self and reality?", nextStage: "master", score: 0.5, pattern: "symbolism" }
+                    ],
+                    explanation: "Deity yoga in Vajrayana is a sophisticated method for transcending our limited self-concept. By identifying with an enlightened being, we can experientially realize qualities of enlightenment, including the ultimate nature of self."
+                },
+                {
+                    id: "m2",
+                    question: "Some traditions speak of the 'true self' or 'Buddha nature'. How do you reconcile this with the teaching of non-self?",
+                    answers: [
+                        { text: "They contradict each other", feedback: "These teachings can seem contradictory. Yet, many traditions find them complementary. How might 'true self' be different from our usual concept of self?", nextStage: "master", score: 0, pattern: "conflict" },
+                        { text: "True self is beyond concepts", feedback: "Insightful! The 'true self' or 'Buddha nature' is often described as beyond conceptual understanding. How might this relate to non-self?", nextStage: "master", score: 0.5, pattern: "transcendence" },
+                        { text: "They're two sides of the same coin", feedback: "Excellent! Many masters teach that ultimate reality transcends both self and non-self. How might this understanding lead to liberation?", nextStage: "complete", score: 1, pattern: "non_duality" }
+                    ],
+                    explanation: "The teachings on Buddha nature or 'true self' are often seen as skillful means to point to our inherent capacity for awakening. Ultimately, both 'self' and 'non-self' are conceptual constructs to be transcended."
+                },
+                {
+                    id: "m3",
+                    question: "In some Zen traditions, it's said that 'from the beginning, not a thing is'. How does this relate to non-self?",
+                    answers: [
+                        { text: "It means nothing exists", feedback: "While this interpretation is common, it's not quite the full picture. How might this statement point to the nature of reality beyond our concepts?", nextStage: "master", score: 0, pattern: "nihilism" },
+                        { text: "It points to emptiness", feedback: "Good insight. How might emptiness relate to our understanding of self and non-self?", nextStage: "master", score: 0.5, pattern: "emptiness" },
+                        { text: "It indicates the primordial state", feedback: "Excellent. This points to the ultimate nature beyond concepts of self or non-self. How might realizing this impact our everyday experience?", nextStage: "complete", score: 1, pattern: "primordial" }
+                    ],
+                    explanation: "This Zen saying points to the ultimate nature of reality, which is beyond our conceptual understanding. It suggests that our usual way of perceiving distinct, separate entities (including a 'self') is a conceptual overlay on primordial awareness."
+                }
+            ]
+        };
 
-        let currentQuestion = 0;
+        let currentStage = "beginner";
         let score = 0;
+        let questionCount = 0;
+        let askedQuestions = new Set();
+        let answerPatterns = {};
 
         function displayQuestion() {
+            const stageQuestions = questions[currentStage].filter(q => !askedQuestions.has(q.id));
+            if (stageQuestions.length === 0) {
+                endGame();
+                return;
+            }
+            const randomIndex = Math.floor(Math.random() * stageQuestions.length);
+            const currentQ = stageQuestions[randomIndex];
+            askedQuestions.add(currentQ.id);
+
+            const stageEl = document.getElementById('stage');
             const questionEl = document.getElementById('question');
             const answersEl = document.getElementById('answers');
-            const currentQ = questions[currentQuestion];
 
+            stageEl.textContent = currentStage.charAt(0).toUpperCase() + currentStage.slice(1);
             questionEl.textContent = currentQ.question;
             answersEl.innerHTML = '';
 
             currentQ.answers.forEach(answer => {
                 const button = document.createElement('button');
                 button.textContent = answer.text;
-                button.onclick = () => selectAnswer(answer);
+                button.onclick = () => selectAnswer(answer, currentQ.explanation);
                 answersEl.appendChild(button);
             });
+
+            updateProgressBar();
         }
 
-        function selectAnswer(answer) {
+        function selectAnswer(answer, explanation) {
             score += answer.score;
+            questionCount++;
+            updateAnswerPatterns(answer.pattern);
+
             const feedbackEl = document.getElementById('feedback');
+            const explanationEl = document.getElementById('explanation');
             feedbackEl.textContent = answer.feedback;
+            explanationEl.textContent = explanation;
 
             setTimeout(() => {
-                currentQuestion++;
-                if (currentQuestion < questions.length) {
-                    displayQuestion();
-                } else {
+                currentStage = determineNextStage(answer.nextStage);
+                if (currentStage === "complete" || questionCount >= 10) {
                     endGame();
+                } else {
+                    displayQuestion();
                 }
-            }, 3000);
+            }, 7000);
+        }
+
+        function updateAnswerPatterns(pattern) {
+            answerPatterns[pattern] = (answerPatterns[pattern] || 0) + 1;
+        }
+
+        function determineNextStage(suggestedStage) {
+            const patternThreshold = 2;
+            if (answerPatterns['questioning'] >= patternThreshold) return "intermediate";
+            if (answerPatterns['non_self'] >= patternThreshold) return "advanced";
+            if (answerPatterns['non_duality'] >= patternThreshold) return "master";
+            return suggestedStage;
+        }
+
+        function updateProgressBar() {
+            const progress = document.getElementById('progress');
+            const percentage = (questionCount / 10) * 100;
+            progress.style.width = `${percentage}%`;
         }
 
         function endGame() {
             const gameArea = document.getElementById('game-area');
             const feedbackEl = document.getElementById('feedback');
+            const explanationEl = document.getElementById('explanation');
 
-            gameArea.innerHTML = '<h2>Game Over</h2>';
-            if (score >= 2) {
-                feedbackEl.textContent = "Congratulations! You've shown a deep understanding of the concept of non-self (anatta). Remember, this is just the beginning of a profound journey of self-discovery and liberation.";
+            gameArea.innerHTML = '<h2>Journey Complete</h2>';
+            if (score >= 8) {
+                feedbackEl.textContent = "Congratulations! You've demonstrated a profound understanding of non-self across different Buddhist traditions. Remember, this intellectual understanding is just the beginning. Continue to apply these insights in your daily life and meditation practice.";
+            } else if (score >= 5) {
+                feedbackEl.textContent = "Well done! You've grasped many key aspects of non-self. Continue to contemplate these ideas and how they apply to your daily experience. Consider exploring more advanced teachings on emptiness and the nature of mind.";
             } else {
-                feedbackEl.textContent = "Thank you for exploring the concept of non-self (anatta). This is a complex idea that often takes time and reflection to fully grasp. Keep questioning and observing your experience!";
+                feedbackEl.textContent = "Thank you for exploring the concept of non-self. This is a complex topic that often takes time and reflection to fully grasp. Keep questioning your assumptions about self and reality, and consider studying Buddhist teachings on non-self in more depth.";
             }
+            explanationEl.textContent = "Remember, the ultimate goal of understanding non-self is not intellectual knowledge, but experiential realization that leads to liberation from suffering.";
         }
 
         displayQuestion();
