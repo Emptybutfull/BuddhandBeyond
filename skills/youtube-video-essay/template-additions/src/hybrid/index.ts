@@ -8,3 +8,5 @@ export * from './Stings';
 export * from './InkLandscape';
 export * from './Placeholders';
 export * from './HybridDemo';
+export * from './Collage';
+export * from './CollageDemo';

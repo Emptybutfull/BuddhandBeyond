@@ -12,6 +12,7 @@ landscape are drawn in code), so they render the same on any machine.
    `<Composition id="HybridDemo" component={HybridDemo} durationInFrames={74 * 30} fps={30} width={1920} height={1080} />`
    `npx remotion render HybridDemo out/hybrid_demo.mp4` (≈ 2–5 min). With footage:
    `defaultProps={{cam: staticFile('camera_cut.mp4'), cutout: staticFile('cutouts/cutout_123.webm')}}`.
+Collage check: `<Composition id="CollageDemo" component={CollageDemo} durationInFrames={14 * 30} fps={30} width={1920} height={1080} />`.
 Written against Remotion 4.0.x / React 18. Uses React.useId, so React ≥ 18.
 
 ## Components (import from `./hybrid`)
@@ -29,6 +30,12 @@ Written against Remotion 4.0.x / React 18. Uses React.useId, so React ≥ 18.
 | `EndCard` | ensō + line, two end-screen slots right | `line` · `guides` (preview only) | last 12–20 s |
 | `InkLandscape` | sumi-e mountains with parallax | `drift` · `seal` | fallback plate only — real art first |
 | `Grain` | animated grain | `opacity` | previews only; the template's texture wins |
+| `Paper` | textured wall (plaster / rice paper) in one colour | `color` · `fibers` | collage: bottom layer of every shot |
+| `Cutout` | one PNG-with-alpha layer (or children) | `src` · `x` `y` · `h`/`w` · `enter`/`exit` left/right/up/down/drop/pop/fade · `at` (keyword frame) · `drift` · `spin` · `filter` (shared grade) | collage: backdrop, figure, props |
+| `Camera` | one slow move over the whole shot | `from` · `to` · `pan` · `tilt` | wrap every collage shot |
+| `Particles` | snow / dust / embers, deterministic | `kind` · `count` · `seed` | atmosphere |
+| `LoopOverlay` | a Flow/Veo loop on black, screen-blended | `src` · `frames` · `opacity` | smoke, fire, ink, lamp flame |
+| `QuoteScroll` | parchment page that scrolls with the reading | `text` · `source` | long quotes read in full |
 
 ## Snippets
 ```tsx

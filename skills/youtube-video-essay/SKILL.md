@@ -1,6 +1,6 @@
 ---
 name: youtube-video-essay
-description: Turn Steven's recordings into a finished YouTube video essay for the Empty But Full channel with Remotion on this PC — either faceless (his Plaud voice over Midjourney thangka/ink/engraving art and real Envato footage) or the hybrid format (Steven on camera full screen, in a side "shrine window" next to diagrams, in a corner circle, or cut out with a mandala halo, mixed with the art, moving sacred-geometry patterns, chapter cards and explainer diagrams) — then cut Shorts and publish/promote it safely. Use this skill whenever the user wants to make, edit, render, upload, or promote a YouTube video, video essay, explainer, talking-head or on-camera video, dharma talk video, longform, Short, or thumbnail from a recording, camera footage or transcript — even if they just say "let's make a video from my Plaud", "I recorded myself", or "post the next one".
+description: Turn Steven's recordings into a finished YouTube video essay for the Empty But Full channel with Remotion on this PC, in any of three looks — faceless museum art (Plaud voice over Midjourney thangka/ink art and Envato footage), hybrid (Steven on camera full screen, in a side shrine window, corner circle or mandala-halo cut-out, with patterns, chapter cards and diagrams), or all-AI paper collage in the Pursuit of Wonder grammar (Midjourney, Nano Banana, ChatGPT, Flow/Veo cut-outs, slop-checked, animated in Remotion); then cut Shorts and publish. Use whenever the user wants to make, edit, render, upload or promote a video, video essay, explainer, on-camera or collage video, dharma talk, Short or thumbnail, or wants AI visuals made or checked for slop — even just "make a video from my Plaud", "I recorded myself" or "post the next one".
 ---
 
 # YouTube video essay (Empty But Full)
@@ -14,6 +14,11 @@ Two formats, one pipeline:
   Built from three reference channels (Scipio, Broken Ruune, Hidden AmuraKa).
 - **Faceless** (Plaud audio only): the same beats, with the on-camera slots filled by art and cards.
 
+Visual styles (pick at the look test; any style works with either format):
+- **Museum** (video 1): thangka/ink/engraving art + Envato footage, slow push-ins — style.md.
+- **Collage** (all-AI, Pursuit-of-Wonder grammar): one paper wall colour, 4–6 cut-out layers per shot
+  acting out each sentence, ~7–8 shots/min, quote pages, AI footage and loops — style-collage.md.
+
 Read as needed (don't preload all):
 - `references/format-blueprint.md` — THE template: beat sheet, chapter recipe, on-camera budget and
   rules, pacing, sound marks, title shapes. Read before planning the edit.
@@ -23,6 +28,10 @@ Read as needed (don't preload all):
   QuestionCard, WheelDiagram, CompareTable, QuoteCard, LowerThird, EnsoSting, EndCard) and install.
 - `references/recording.md` — one page for Steven on how to film himself; send it when he plans to record.
 - `references/reference-channels.md` — what was learned from the three channels. Don't re-watch them.
+- `references/style-collage.md` — the Pursuit of Wonder collage style decoded (shot log, layer stack,
+  metaphors) and the 12-step all-AI rebuild with Steven's voice.
+- `references/ai-assets.md` — which AI tool for what (Midjourney, Nano Banana, ChatGPT, Flow/Veo,
+  rembg), prompt shapes, and the slop rubric + reviewer brief. Read before generating anything.
 - `references/pipeline.md` — exact commands per step and which lists to edit per video.
 - `references/gotchas.md` — read BEFORE using Chrome, Midjourney, Envato, YouTube Studio, or when anything breaks.
 - `references/style.md` — look, pacing, text, audio levels, MJ prompt suffixes, packaging rules.
@@ -47,12 +56,14 @@ what to look at, then keep working unless the choice is genuinely Steven's. Plai
    `build_lecture.py` (EDL, COLD_OPEN_ENTRIES, CHAPTERS), run it, transcribe `voice.wav` to listen back.
    Hybrid: also dump `edl.json`, sync if Plaud was the mic, and `cut_camera.py` → `public/camera_cut.mp4`
    (camera-pipeline.md §1–2; drift must be ±0.07 s). Share the cut plan in 3–4 bullets while working.
-4. **Visual plan**: write `longform_prompts.json` (~45 prompts across styles T/S/W/U/P/E matched to the talk's
+4. **Visual plan** (collage style: style-collage.md steps 2–7 replace this step — `split_shots.py`, fill
+   shots.json, assets.json, generate across the four tools, rembg): write `longform_prompts.json` (~45 prompts across styles T/S/W/U/P/E matched to the talk's
    moments; hybrid needs ~25% fewer — the on-camera stretches cover the rest), submit to Midjourney by JS,
    download all variants. Pick one diagram per chapter (WheelDiagram / CompareTable / QuoteCard). Start Envato
    footage pulls (8–10 real clips) and music (2–3 long dark ambient tracks) while MJ renders.
 5. **Review images** with two subagents in parallel (half the keys each, `model: "sonnet"`), writing
-   `review/longform/review_a.json` / `review_b.json` (use/best/crop/ai/note per key).
+   `review/longform/review_a.json` / `review_b.json` (use/best/crop/ai/note per key). Every AI image and
+   clip also gets the slop check (`slop_sheet.py` + the brief in ai-assets.md); fix with Nano Banana or drop.
 6. **Shot list + plan**: hybrid → `plan_presenter.py` (review its table, not the transcript), mattes for any
    cutout, then edit `longform_shots.py` (shots, labels, graphics, presenter stretches, per-chapter looks,
    title), run `plan_longform.py`, build the music bed (sound marks per format-blueprint.md).

@@ -20,5 +20,11 @@ What's new:
 - `references/reference-channels.md` — notes from Scipio, Broken Ruune, Hidden AmuraKa.
 - `references/recording.md` — one page on filming yourself.
 - `references/camera-pipeline.md`, `references/motion-kit.md` — how Claude builds it.
-- `scripts/sync_camera.py`, `cut_camera.py`, `plan_presenter.py`, `matte_presenter.py`.
-- `template-additions/src/hybrid/` — Remotion components (presenter layouts, patterns, cards, diagrams).
+- `references/style-collage.md` — Pursuit of Wonder's collage style decoded + the all-AI rebuild, step by step.
+- `references/ai-assets.md` — Midjourney / Nano Banana / ChatGPT / Flow routing and the AI-slop check.
+- `scripts/sync_camera.py`, `cut_camera.py`, `plan_presenter.py`, `matte_presenter.py`,
+  `split_shots.py` (shot time-boxes), `slop_sheet.py` (contact sheets for the slop review).
+- `template-additions/src/hybrid/` — Remotion components (presenter layouts, patterns, cards, diagrams,
+  and the collage engine: Paper, Cutout, Camera, Particles, LoopOverlay, QuoteScroll).
+
+Extra one-time installs for the collage style: `pip install "rembg[cpu,cli]"` (or `[gpu,cli]`).
