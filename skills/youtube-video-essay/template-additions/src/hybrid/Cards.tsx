@@ -145,7 +145,7 @@ export const LowerThird: React.FC<{title: string; sub?: string}> = ({title, sub}
   return (
     <AbsoluteFill style={{opacity: out}}>
       <div style={{position: 'absolute', left: 0, right: 0, bottom: 0, height: H * 0.4, background: 'linear-gradient(transparent, rgba(0,0,0,0.78))'}} />
-      <div style={{position: 'absolute', left: W * 0.06, bottom: H * 0.1}}>
+      <div style={{position: 'absolute', left: W * 0.06, bottom: H * 0.1, textShadow: '0 2px 14px rgba(0,0,0,0.85)'}}>
         <div style={{fontFamily: fonts.serif, fontWeight: 600, fontSize: 58, color: colors.bone, opacity: interpolate(frame, [6, 18], [0, 1], clamp)}}>{title}</div>
         <div style={{height: 2, width: line, background: colors.gold, margin: '10px 0 14px'}} />
         {sub && (
