@@ -1,4 +1,4 @@
-# Motion kit (Remotion) — `template-additions/src/hybrid`
+# Motion kit (Remotion) — `template-additions/src/hybrid` and `src/design`
 
 Self-contained components for the hybrid format. No image files needed (patterns, ensō, ink
 landscape are drawn in code), so they render the same on any machine.
@@ -36,6 +36,51 @@ Written against Remotion 4.0.x / React 18. Uses React.useId, so React ≥ 18.
 | `Particles` | snow / dust / embers, deterministic | `kind` · `count` · `seed` | atmosphere |
 | `LoopOverlay` | a Flow/Veo loop on black, screen-blended | `src` · `frames` · `opacity` | smoke, fire, ink, lamp flame |
 | `QuoteScroll` | parchment page that scrolls with the reading | `text` · `source` | long quotes read in full |
+
+## The design kit — `template-additions/src/design` (house look, Nov 2026)
+Install: copy `template-additions/src/design/` to `D:\open\spiritual-short\src\design\` (it imports
+`../hybrid/Placeholders`, so `src/hybrid` must be there too). Fonts load through
+`@remotion/google-fonts` (Unbounded, Jost, JetBrains Mono, Instrument Serif, Shippori Mincho, Noto Serif
+Tibetan/Devanagari). Register and render the showcase once:
+`<Composition id="DesignShowcase" component={DesignShowcase} durationInFrames={showcaseFrames} fps={30} width={1920} height={1080} />`
+(needs `public/indra/0001.png…` from `scripts/blender/indras_net.py` and any CC0 photo at `public/cat.png`;
+or pass `indra={false}` / `meme={false}`). Every scene is also exported on its own (`TitleScene`, `NoSelfScene`, …)
+as a starting point for real shots.
+
+| Component | What it is | Key props |
+|---|---|---|
+| `GrainGradient` | THE ground: a slow field mapped through a chapter ramp, heavy grain on top | `ramp` (tokens `ramps.*`) · `kind` ribbon/aura/flow/horizon/rings · `focus` · `scale` · `heat` (animate it) · `gain` · `grain` · `speed` · `seed` |
+| `Grain` | the same heavy grain for flat/print scenes; put it last | `amount` · `blend` ('multiply' on paper, 'overlay' on dark) |
+| `Halftone` | one-ink halftone "reprint" of anything (image, video of Steven, SVG): ink dots on transparent | `ink` · `cell` · `angle` · `contrast` · `brightness` · `invert` |
+| `GradientMap` | re-colour by brightness through a ramp (Blender renders, footage) | `ramp` |
+| `MediaCard` | film-frame card for borrowed clips, stills and memes, with credit line and seconds counter | `credit` · `width` · `aspect` · children = the clip |
+| `Wide` / `Heavy` / `Micro` / `Soft` | the four type voices (Unbounded, Jost Black, mono labels, serif italic) | `size` · `color` |
+| `Stagger` / `Rise` / `Slam` | the three allowed entrances: pieces one by one, block rise + unblur, hard cut-in | `at` · `every` · `frames` (word timings) |
+| `Corner` | print-style microtext in a corner | `pos` tl/tr/bl/br |
+| `Figure` | drawn stand-in for a cut-out person | `mode` shaded (feed to Halftone) / light (glow) / flat |
+| `tokens.ts` | ramps, flat grounds, five colours, fonts | change look HERE only |
+
+Recipes:
+```tsx
+// chapter ground that heats up over the shot
+<GrainGradient ramp={ramps.thermal} kind="ribbon" heat={interpolate(frame, [0, dur], [-0.2, 0.25])} />
+
+// Steven as a punch cut-out (matted footage → one ink on paper, giant word overprinted)
+<AbsoluteFill style={{background: flats.bonePaper.ground}}>
+  <Halftone ink={cobalt} cell={10}><OffthreadVideo src={staticFile('cutouts/cutout_123.webm')} transparent muted /></Halftone>
+  <div style={{mixBlendMode: 'multiply'}}><Heavy size={470} color={vermilion}>No self</Heavy></div>
+  <Grain amount={0.25} blend="multiply" />
+</AbsoluteFill>
+
+// a Blender shot re-coloured to the chapter
+<GradientMap ramp={ramps.lapisFire}><Img src={staticFile(`indra/${String(f).padStart(4, '0')}.png`)} /></GradientMap>
+
+// a film quote
+<MediaCard credit="GROUNDHOG DAY · 1993 · DIR. HAROLD RAMIS · COLUMBIA"><OffthreadVideo src={clip} muted /></MediaCard>
+```
+Notes: `GrainGradient` computes at 1/4 size and scales up (about 10 ms a frame); canvases draw in
+`useLayoutEffect`, so every frame is independent. `Halftone` is pure CSS/SVG, so it works on video.
+Particle scenes (`EmptinessScene`, `ImpermanenceScene`) are closed-form: no simulation state.
 
 ## Snippets
 ```tsx

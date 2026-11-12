@@ -28,3 +28,10 @@ What's new:
   and the collage engine: Paper, Cutout, Camera, Particles, LoopOverlay, QuoteScroll).
 
 Extra one-time installs for the collage style: `pip install "rembg[cpu,cli]"` (or `[gpu,cli]`).
+
+## Nov 2026: design, motion, Blender, memes, no Envato
+- `references/design-system.md` — the house look (grainy gradients, palette per chapter, giant type, print, glow).
+- `references/motion-editing.md`, `directing.md`, `memes-fair-use.md`, `blender.md`, `free-assets.md`.
+- `template-additions/src/design/` — copy to `D:\open\spiritual-short\src\design\`; render `DesignShowcase`.
+- `scripts/blender/indras_net.py` — `blender -b -P indras_net.py -- --out public/indra --still 40` to test.
+- One-time: Blender 5.1+ (and its Claude connector if wanted), `npx skills add remotion-dev/skills`.
