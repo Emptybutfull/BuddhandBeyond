@@ -1,5 +1,5 @@
 // Procedural sumi-e mountains with slow parallax. A fallback B-roll plate and the
-// placeholder "art" in HybridDemo. Real Midjourney/Envato art always wins over this.
+// placeholder "art" in HybridDemo. Real art and footage always win over this.
 import React from 'react';
 import {AbsoluteFill, useCurrentFrame, useVideoConfig} from 'remotion';
 

@@ -125,7 +125,7 @@ Which tool for what, prompt shapes, and the slop rubric: **ai-assets.md**.
     Dissolve 0.5–1.0 s between most shots (overlap Sequences and fade, or @remotion/transitions),
     hard cut on big pauses. Quotes: `QuoteScroll` for the shot's full length. Reveals: two cut-outs,
     the top one `exit="left"` at the keyword (face slides away → ensō/void underneath).
-11. **Sound** — felt piano / low strings / pads bed (Envato, or AI music), swell on danger, solo
+11. **Sound** — felt piano / low strings / pads bed (YouTube Audio Library or AI music — free-assets.md), swell on danger, solo
     piano under quotes; 20–40 small SFX (brush on paper, wind, fire, bell, clock) at prop moments.
 12. **Preview → QA → render → publish** — unchanged from SKILL.md steps 7–9; render 90 s first.
 
