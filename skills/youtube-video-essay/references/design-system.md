@@ -8,7 +8,8 @@ bottom). Read before any look test. Working examples of everything here:
 **Grainy gradients**: flowing heat-map colour on near-black with heavy film grain, huge heavy type
 with tiny labels — and a **new ground colour every chapter**. Three accent looks appear inside it:
 **print** (halftone cut-outs on flat colour or paper), **sacred art** (real thangka colour), and
-**glow** (white-light figures for awakening moments).
+**glow** (white-light figures for awakening moments). A fourth, for Reels and story passages: **cel**
+(flat fills, hard two-tone shadows, bold ink lines, banded gradients; motion-kit.md § cel-shaded kit).
 
 ### Steven's reference board (what each one teaches)
 | Reference | Take from it |

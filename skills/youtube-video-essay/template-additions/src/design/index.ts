@@ -9,3 +9,4 @@ export * from './ScenesA';
 export * from './ScenesB';
 export * from './ScenesC';
 export * from './DesignShowcase';
+export * from './awakening';

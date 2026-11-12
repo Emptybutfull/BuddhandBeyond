@@ -35,3 +35,9 @@ Extra one-time installs for the collage style: `pip install "rembg[cpu,cli]"` (o
 - `template-additions/src/design/` — copy to `D:\open\spiritual-short\src\design\`; render `DesignShowcase`.
 - `scripts/blender/indras_net.py` — `blender -b -P indras_net.py -- --out public/indra --still 40` to test.
 - One-time: Blender 5.1+ (and its Claude connector if wanted), `npx skills add remotion-dev/skills`.
+
+## Nov 2026: cel-shaded Reel "Awakening"
+- `template-additions/src/design/awakening/` — comes along with `src/design` (copy the folder again).
+  Register `<Composition id="Awakening" component={Awakening} {...AWAKENING} />` in `Root.tsx`.
+- `scripts/audio/awakening_score.py` — makes the music and sound effects (needs only `pip install numpy`).
+- Render + sound: the four commands in `references/motion-kit.md` § cel-shaded kit.

@@ -24,6 +24,9 @@ type Props = {
   gain?: number;
   grain?: number; // 0–1, heavy by default
   res?: number; // field is computed at 1/res size and scaled up
+  bands?: number; // >0: posterise the field into this many flat steps (the cel-shaded sky)
+  blur?: number; // px; default res * 0.6
+  time?: number; // seconds; overrides the clock (use it to make a loop's last frame equal its first)
   style?: React.CSSProperties;
   children?: React.ReactNode;
 };
@@ -76,6 +79,9 @@ export const GrainGradient: React.FC<Props> = ({
   gain = 1,
   grain = 0.45,
   res = 4,
+  bands = 0,
+  blur,
+  time,
   style,
   children,
 }) => {
@@ -91,15 +97,23 @@ export const GrainGradient: React.FC<Props> = ({
     if (!ctx) return;
     const img = ctx.createImageData(w, h);
     const d = img.data;
-    const t = (frame / fps) * speed;
+    const t = (time ?? frame / fps) * speed;
     const a = width / height;
     let p = 0;
     for (let y = 0; y < h; y++) {
       const v = y / h;
       for (let x = 0; x < w; x++) {
-        const f = field(kind, x / w, v, a, t, seed, focus[0], focus[1], scale) * gain + heat;
-        // a little dither so 8-bit bands never show as steps
-        const i = Math.max(0, Math.min(255, Math.round(f * 255 + (hash(x * 13.1 + y * 71.7 + frame) - 0.5) * 5))) * 3;
+        let f = field(kind, x / w, v, a, t, seed, focus[0], focus[1], scale) * gain + heat;
+        let i: number;
+        if (bands > 0) {
+          // flat steps with a thin soft edge between them
+          const q = f * bands, k = Math.floor(q), fr = q - k;
+          f = (k + (fr < 0.44 ? 0 : fr > 0.56 ? 1 : (fr - 0.44) / 0.12)) / bands;
+          i = Math.max(0, Math.min(255, Math.round(f * 255))) * 3;
+        } else {
+          // a little dither so 8-bit bands never show as steps
+          i = Math.max(0, Math.min(255, Math.round(f * 255 + (hash(x * 13.1 + y * 71.7 + frame) - 0.5) * 5))) * 3;
+        }
         d[p++] = lut[i];
         d[p++] = lut[i + 1];
         d[p++] = lut[i + 2];
@@ -107,11 +121,11 @@ export const GrainGradient: React.FC<Props> = ({
       }
     }
     ctx.putImageData(img, 0, 0);
-  }, [frame, fps, w, h, width, height, kind, speed, seed, focus, scale, heat, gain, lut]);
+  }, [frame, fps, w, h, width, height, kind, speed, seed, focus[0], focus[1], scale, heat, gain, lut, bands, time]);
 
   return (
     <AbsoluteFill style={{background: ramp[0], overflow: 'hidden', ...style}}>
-      <canvas ref={ref} width={w} height={h} style={{position: 'absolute', width: '100%', height: '100%', filter: `blur(${res * 0.6}px)`, transform: 'scale(1.02)'}} />
+      <canvas ref={ref} width={w} height={h} style={{position: 'absolute', width: '100%', height: '100%', filter: `blur(${blur ?? res * 0.6}px)`, transform: 'scale(1.02)'}} />
       {children}
       {grain > 0 && <Grain amount={grain} />}
     </AbsoluteFill>
@@ -139,8 +153,10 @@ const makeTile = (): string => {
   return tileUrl;
 };
 
-export const Grain: React.FC<{amount?: number; size?: number; blend?: React.CSSProperties['mixBlendMode']}> = ({amount = 0.45, size = 384, blend = 'overlay'}) => {
-  const frame = useCurrentFrame();
+// `still` keeps the grain in one place: paper texture that costs almost nothing in file size.
+export const Grain: React.FC<{amount?: number; size?: number; blend?: React.CSSProperties['mixBlendMode']; still?: boolean}> = ({amount = 0.45, size = 384, blend = 'overlay', still = false}) => {
+  const now = useCurrentFrame();
+  const frame = still ? 0 : now;
   const url = React.useMemo(makeTile, []);
   const ox = Math.floor(hash(frame * 3.3) * size);
   const oy = Math.floor(hash(frame * 7.7 + 1) * size);

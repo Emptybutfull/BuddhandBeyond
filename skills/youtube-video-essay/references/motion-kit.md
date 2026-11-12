@@ -99,6 +99,48 @@ Particle scenes (`EmptinessScene`, `ImpermanenceScene`) are closed-form: no simu
   slow, install the font locally and point `fonts.kanji` at it.
 - Render speed here (4 CPU cores, no GPU): about 0.14 s per frame for the whole showcase.
 
+## The cel-shaded kit — `src/design/awakening` (Nov 2026)
+Steven's ask: flat colours, gradients, the cel-shaded animation look. Everything is SVG drawn in
+code, so it is sharp at any zoom, costs no credits, and nothing in it can be Content-ID matched.
+Working example: the 2-minute Reel `Awakening` (1080×1920, 60 BPM).
+
+| Piece | What it is |
+|---|---|
+| `Buddha` + `LOOKS` + `mixLook` | One seated figure with ~25 parameters (skin, robe, hair, line weight, shadow depth, back-light, ushnisha, curls, ear length, urna, lotus bloom). `mixLook(a, b, t)` blends any two looks, so the figure *morphs*. Poses: `reach` (hands in lap → touching the earth), `eye`, `mudra` (`dhyana`, `earth`, `give`, `fearless`, `teach`). |
+| `Silhouette` | The same body as one flat shape. Stroke it wide in flat colours for aura bands, nest scaled copies for a tunnel, use it as a mask for an outline-only figure. |
+| `Elements.tsx` | `Stars`, `Moon`, `BodhiTree`, `Earth`, `MaraField` (red field, spikes, arrows that turn to petals), `Tunnel`, `DivineEye`, `Beings`, `Wheel12` (twelve links with Pali labels on the ring), `Flames`, `Rays`, `SpeedLines`, `AuraBands`, `Emanation`, `EnsoStroke`. |
+| `GrainGradient bands={7}` | Posterises any field into flat steps: the cel-shaded sky. `<Grain still />` is paper grain that does not move (small files). |
+| `Awakening.tsx` | The film: cue sheet (`CUE`), camera, the circle wipe that carries each cycle through the figure, captions inside Instagram's safe area. |
+
+**How the cel look is built** (reuse for any drawn subject): 1) every part is a closed path; 2) fill
+it with the *shadow* colour, draw the same path again in the *base* colour shifted toward the light
+and clipped to the part: a hard crescent of shadow is left; 3) outlines are drawn *behind* the
+fills at double width, so overlapping parts share one clean outer line; 4) cast shadows (chin on
+neck, hair on forehead) are hand-placed shapes; 5) the figure moves "on twos" (`Math.floor(frame/2)`)
+while the camera stays smooth; 6) big moments get 2–3 **impact frames** (flat ground + speed lines).
+
+**Vertical / Reels rules used:** text between y 230 and 560, left margin 64, nothing important in
+the bottom 380 px or under the right-hand buttons; first frame already holds the hook; last frame
+equals the first so it loops; 1 beat = 30 frames and every cut sits on a beat.
+
+Render and add sound on the PC:
+```
+<Composition id="Awakening" component={Awakening} {...AWAKENING} />        (in Root.tsx)
+npx remotion render src/index.ts Awakening out/awakening.mp4 --crf 16
+python scripts/audio/awakening_score.py --out out                           (numpy only)
+ffmpeg -i out/awakening.mp4 -i out/awakening_full.wav -c:v copy -c:a aac -b:a 256k out/awakening_reel.mp4
+```
+`awakening_score.py` synthesises the score and every sound effect from the same cue sheet (bowl on
+each cycle, boom on the touch, dead silence at "IT STOPS."). `--bed track.wav --bed-at 20
+--transpose 2` swaps the music for another track and keeps the synced effects. Claude cannot hear:
+it checks loudness (−14 LUFS), peaks, and tonal balance against a reference track by numbers, and
+Steven judges by ear.
+
+Gotchas found: ids built from `React.useId()` must use a separator that is not a letter or digit
+(`id + '_t'`): React's ids are base-32, so `id + 'f'` collides with another component's id and the
+wrong clip path is used (parts turn black). Text on a busy ground gets a hard offset copy in a
+second ink (`under`), not a soft shadow.
+
 ## Snippets
 ```tsx
 // side mode: Steven left, diagram right, segments lit on the words (frames from word timings)

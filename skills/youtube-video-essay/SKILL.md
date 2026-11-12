@@ -35,6 +35,8 @@ Read as needed (don't preload all):
 - `references/camera-pipeline.md` — hybrid only: sync, cut camera with the voice EDL, plan on-camera
   moments, cut-outs, shot-list wiring, extra QA.
 - `references/motion-kit.md` — the Remotion components in `src/hybrid` and `src/design`, and install.
+  Includes the **cel-shaded kit** (`src/design/awakening`: a morphing drawn figure, flat-colour scene
+  pieces, the 2-minute `Awakening` Reel) and the synced score script `scripts/audio/awakening_score.py`.
 - `references/recording.md` — one page for Steven on how to film himself; send it when he plans to record.
 - `references/reference-channels.md` — what was learned from the reference channels. Don't re-watch them.
 - `references/style-collage.md` — the Pursuit of Wonder collage style and its all-AI rebuild.
