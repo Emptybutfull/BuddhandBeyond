@@ -82,6 +82,23 @@ Notes: `GrainGradient` computes at 1/4 size and scales up (about 10 ms a frame);
 `useLayoutEffect`, so every frame is independent. `Halftone` is pure CSS/SVG, so it works on video.
 Particle scenes (`EmptinessScene`, `ImpermanenceScene`) are closed-form: no simulation state.
 
+### Design-kit gotchas (found while testing)
+- **Grain makes huge files.** The 74 s showcase at crf 20 was 860 MB. Masters for YouTube: crf 18–20
+  and accept the size (or ProRes); previews for Steven's phone: `ffmpeg -i in.mp4 -vf scale=1280:-2
+  -c:v libx264 -crf 27 -an out.mp4` (18 MB). YouTube smears fine grain, so keep `grain` ≤ 0.45 and
+  export 1440p or 4K when possible for a better bitrate tier.
+- **Canvas text needs loaded fonts.** Anything that draws type on a canvas (the 色 → 空 particles)
+  must `await fontsReady` from tokens.ts first, or the canvas falls back to a system font without
+  any error. HTML text is safe (Remotion waits for the font loaders).
+- **Halftone filter region.** The SVG filter in `Halftone` is pinned to the box (`x=0 y=0 width=1
+  height=1`) and clipped by 1 px; without that it prints a solid ink frame around the image.
+- **Blend modes stop at transforms.** `mixBlendMode` only blends with layers in the same stacking
+  context; a parent with `transform`, `opacity` or `filter` cuts it off. `Halftone` therefore outputs
+  real transparency; use multiply only for type overprinting it, inside the same wrapper.
+- **Kanji font** (Shippori Mincho) arrives as ~120 small files on first render; if the network is
+  slow, install the font locally and point `fonts.kanji` at it.
+- Render speed here (4 CPU cores, no GPU): about 0.14 s per frame for the whole showcase.
+
 ## Snippets
 ```tsx
 // side mode: Steven left, diagram right, segments lit on the words (frames from word timings)

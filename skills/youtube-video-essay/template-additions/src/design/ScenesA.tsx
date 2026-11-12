@@ -5,7 +5,7 @@ import {Grain, GrainGradient} from './GrainGradient';
 import {GradientMap} from './Halftone';
 import {Corner, Heavy, Micro, Rise, Stagger, Wide} from './Type';
 import {clamp01, easeInOut, easeOut, hash, prng, simplex3} from './noise';
-import {bone, fiveColours, fonts, ramps} from './tokens';
+import {bone, fiveColours, fonts, fontsReady, ramps} from './tokens';
 
 const clamp = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
 
@@ -58,7 +58,7 @@ const useGlyph = (char: string, n: number, seed: number): Float32Array | null =>
   const [handle] = React.useState(() => delayRender(`glyph ${char}`));
   React.useEffect(() => {
     const S = 420;
-    document.fonts.load(`800 300px "${fonts.kanji}"`, char).then(() => {
+    fontsReady.then(() => document.fonts.load(`800 300px "${fonts.kanji}"`, char)).then(() => {
       const c = document.createElement('canvas');
       c.width = c.height = S;
       const ctx = c.getContext('2d')!;

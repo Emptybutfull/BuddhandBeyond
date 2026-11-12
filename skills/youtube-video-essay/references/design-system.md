@@ -22,6 +22,9 @@ with tiny labels — and a **new ground colour every chapter**. Three accent loo
 | "Digital nostalgia" board (pixel type, old OS windows, dither) | rare: "the modern distracted mind" passages; dither as texture |
 | Blue Vajradhara thangka (lapis body, cinnabar halo, gold, turquoise) | the sacred palette; proof that thangka colour and poster colour are the same family |
 
+References teach grammar. A published frame never reuses a reference's wording or exact layout
+(the showcase's "NO SELF" frame is a study of the pigeon poster — vary it before it goes in a video).
+
 ## The 12 rules
 1. **Design first, motion second.** Every frame must work as a still poster before it moves.
 2. **One focal point.** If everything moves, nothing wins.

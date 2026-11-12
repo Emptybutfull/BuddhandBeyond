@@ -19,6 +19,10 @@ const kanji = loadKanji('normal', {weights: ['800'], ignoreTooManyRequestsWarnin
 const tibetan = loadTibetan('normal', {weights: ['600'], subsets: ['tibetan']});
 const deva = loadDeva('normal', {weights: ['600'], subsets: ['devanagari']});
 
+// Resolves when every font file above has arrived. Anything that draws text on a canvas must wait
+// for it, or the canvas silently falls back to a system font.
+export const fontsReady: Promise<unknown> = Promise.all([wide, heavy, mono, serif, kanji, tibetan, deva].map((f) => f.waitUntilDone().catch(() => undefined)));
+
 export const fonts = {
   wide: wide.fontFamily, // THERMAL-style titles
   heavy: heavy.fontFamily, // Futura-family statements ("THIS IS IT")
