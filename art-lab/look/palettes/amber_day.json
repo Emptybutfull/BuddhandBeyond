@@ -1,0 +1,16 @@
+{
+  "name": "amber_day",
+  "note": "Warm daylight. One hue family (cream, sand, terracotta, plum); the accent is teal and belongs to the story object only.",
+  "line": "#3a1d24",
+  "sky_top": "#f1d6a0",
+  "sky_bottom": "#f8ecc8",
+  "disc": "#fbf2dc",
+  "ground": ["#e3ac5f", "#b86a43"],
+  "rock": ["#b86a43", "#5e3040"],
+  "crystal": ["#d99a78", "#5e3040"],
+  "metal": ["#fbf2dc", "#c98a6c"],
+  "far": ["#ecc48c", "#e9cf9e"],
+  "accent": "#18b3ad",
+  "sun_elevation_deg": 27,
+  "sun_azimuth_deg": -62
+}

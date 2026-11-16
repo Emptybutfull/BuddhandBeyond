@@ -1,0 +1,16 @@
+{
+  "name": "charcoal_night",
+  "note": "Night. One hue family (navy to slate blue); the accent is a glowing amber and belongs to the story object only.",
+  "line": "#060817",
+  "sky_top": "#0a0e22",
+  "sky_bottom": "#1a2148",
+  "disc": "#232c5c",
+  "ground": ["#252d58", "#101430"],
+  "rock": ["#313a70", "#141938"],
+  "crystal": ["#40508f", "#171d42"],
+  "metal": ["#6473ad", "#232a57"],
+  "far": ["#161c3e", "#19204a"],
+  "accent": "#ffb347",
+  "sun_elevation_deg": 34,
+  "sun_azimuth_deg": 58
+}
