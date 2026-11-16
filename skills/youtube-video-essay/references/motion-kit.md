@@ -108,7 +108,7 @@ Working example: the 2-minute Reel `Awakening` (1080×1920, 60 BPM).
 |---|---|
 | `Buddha` + `LOOKS` + `mixLook` | One seated figure with ~25 parameters (skin, robe, hair, line weight, shadow depth, back-light, ushnisha, curls, ear length, urna, lotus bloom). `mixLook(a, b, t)` blends any two looks, so the figure *morphs*. Poses: `reach` (hands in lap → touching the earth), `eye`, `mudra` (`dhyana`, `earth`, `give`, `fearless`, `teach`). |
 | `Silhouette` | The same body as one flat shape. Stroke it wide in flat colours for aura bands, nest scaled copies for a tunnel, use it as a mask for an outline-only figure. |
-| `Elements.tsx` | `Stars`, `Moon`, `BodhiTree`, `Earth`, `MaraField` (red field, spikes, arrows that turn to petals), `Tunnel`, `DivineEye`, `Beings`, `Wheel12` (twelve links with Pali labels on the ring), `Flames`, `Rays`, `SpeedLines`, `AuraBands`, `Emanation`, `EnsoStroke`. |
+| `Elements.tsx` | `Stars`, `Moon`, `BodhiTree`, `Earth`, `MaraField` (red field, spikes, arrows that turn to petals), `Tunnel`, `DivineEye`, `Beings`, `Wheel12` (twelve links: Pali on the ring, English just inside it; `LINKS`, `LINKS_EN`), `Flames`, `Rays`, `SpeedLines`, `AuraBands`, `Emanation`, `EnsoStroke`. |
 | `GrainGradient bands={7}` | Posterises any field into flat steps: the cel-shaded sky. `<Grain still />` is paper grain that does not move (small files). |
 | `Awakening.tsx` | The film: cue sheet (`CUE`), camera, the circle wipe that carries each cycle through the figure, captions inside Instagram's safe area. |
 

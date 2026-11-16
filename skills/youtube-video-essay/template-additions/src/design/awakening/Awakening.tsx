@@ -11,7 +11,7 @@ import {Grain, GrainGradient} from '../GrainGradient';
 import {clamp01, easeInOut, easeOut, hash, smooth} from '../noise';
 import {fonts, ramps} from '../tokens';
 import {Buddha, LOOKS, Look, Pose, Silhouette, bodyLook, mixHex, mixLook} from './Buddha';
-import {AuraBands, Beings, BodhiTree, DivineEye, Earth, Emanation, EnsoStroke, Flames, MaraField, Moon, Rays, Sparkle, SpeedLines, Stars, Tunnel, Wheel12, chainStep, lerp, seg, wheelSpin} from './Elements';
+import {AuraBands, Beings, BodhiTree, DivineEye, Earth, Emanation, EnsoStroke, Flames, MaraField, Moon, Rays, Sparkle, SpeedLines, Stars, Tunnel, Wheel12, LINKS, LINKS_EN, chainStep, lerp, seg, wheelSpin} from './Elements';
 
 export const AWAKENING = {width: 1080, height: 1920, fps: 30, durationInFrames: 3600};
 
@@ -198,7 +198,7 @@ const World: React.FC<{id: WorldId; t: number; frame: number}> = ({id, t, frame}
     behind = <Flames frame={frame} heat={k} c={['#5a0d12', '#c0261d', '#f08a1c']} />;
     localBehind = (
       <g>
-        <circle cy={-24} r={358} fill="#0b0a0c" opacity={0.62} />
+        <circle cy={-24} r={400} fill="#0b0a0c" opacity={0.62} />
         <Wheel12 rot={wheelSpin(tau) - wheelSpin(12) + 0.7} active={Math.floor(chainStep(tau))} c={{ring: '#f8e9c8', node: '#0b0a0c', on: '#f8d77a', text: '#f8e9c8', dim: '#6d6a66'}} />
         <Silhouette look={L} pose={pose} fill="#c0261d" strokeWidth={44} />
         <Silhouette look={L} pose={pose} fill="#f08a1c" strokeWidth={22} />
@@ -429,7 +429,17 @@ export const Awakening: React.FC = () => {
         </div>
       )}
       <Caption t={t} from={48.3} to={63.5} color="#f2e6b1" label={'CYCLE 3 · SECOND WATCH\nDIBBACAKKHU — THE DIVINE EYE'} lines={['HE SEES BEINGS', 'FALL AND RISE.']} size={100} under="#06201d" />
-      <Caption t={t} from={64.7} to={75.85} color="#f8e9c8" label={'CYCLE 4 · THIRD WATCH\nPAṬICCASAMUPPĀDA — HOW SUFFERING ARISES'} lines={['HE SEES', 'THE CAUSE.']} under={ink} />
+      <Caption t={t} from={64.7} to={75.85} color="#f8e9c8" label={'CYCLE 4 · THIRD WATCH\nPAṬICCASAMUPPĀDA — HOW SUFFERING ARISES'} lines={['HE SEES THE CAUSE.']} size={82} under={ink} />
+      {/* the link that is firing right now, in Pali and English, so the chain can be followed */}
+      {t >= 65.3 && t < 75.85 && (() => {
+        const k = Math.floor(chainStep(t - CUE.third)) % 12;
+        return (
+          <div style={{position: 'absolute', left: 64, top: 424, opacity: Math.min(seg(t, 65.3, 65.7), 1 - seg(t, 75.55, 75.85)), fontFamily: fonts.mono, fontWeight: 500, fontSize: 32, letterSpacing: '0.06em', whiteSpace: 'nowrap', textShadow: `2px 2px 0 ${ink}`}}>
+            <span style={{color: '#f8e9c8'}}>{String(k + 1).padStart(2, '0')} · {LINKS[k]} — </span>
+            <span style={{color: '#f8d77a'}}>{LINKS_EN[k]}</span>
+          </div>
+        );
+      })()}
       <Caption t={t} from={CUE.stop} to={79.7} color={vermilion} labelColor={cobalt} label="NIRODHA — CESSATION" lines={[{text: 'IT STOPS.', at: CUE.stop, slam: true}]} size={170} />
       <Caption t={t} from={81} to={87.6} color="#fbf3e1" label="CYCLE 5 · DAWN" soft="the morning star rises." />
       <Caption t={t} from={CUE.awake} to={99.6} color="#fbf3e1" label="BUDDHA — “ONE WHO IS AWAKE”" lines={[{text: 'AWAKE.', at: CUE.awake, slam: true}]} size={232} under="#2a2a7c" />

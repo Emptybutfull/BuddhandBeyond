@@ -256,11 +256,14 @@ export const Beings: React.FC<{t: number; show: number; rise: string; fall: stri
 
 // ---------- third watch: the twelve links ----------
 export const LINKS = ['AVIJJĀ', 'SAṄKHĀRĀ', 'VIÑÑĀṆA', 'NĀMARŪPA', 'SAḶĀYATANA', 'PHASSA', 'VEDANĀ', 'TAṆHĀ', 'UPĀDĀNA', 'BHAVA', 'JĀTI', 'JARĀMARAṆA'];
+// English for each link, in the same order. Shown inside the ring under each Pali name.
+export const LINKS_EN = ['IGNORANCE', 'FORMATIONS', 'CONSCIOUSNESS', 'NAME & FORM', 'SIX SENSES', 'CONTACT', 'FEELING', 'CRAVING', 'CLINGING', 'BECOMING', 'BIRTH', 'AGING & DEATH'];
 export const wheelSpin = (tau: number) => 0.2 * tau + 0.045 * tau * tau; // radians
 export const chainStep = (tau: number) => 1.0 * tau + 0.22 * tau * tau; // which link is firing
 export const Wheel12: React.FC<{rot: number; active: number; out?: number; broken?: number; c: {ring: string; node: string; on: string; text: string; dim: string}; R?: number; cy?: number}> = ({rot, active, out = 0, broken = 0, c, R = 408, cy = -24}) => {
   const id = React.useId().replace(/:/g, '');
   const gap = broken > 0 ? 10 : 0;
+  const Ri = R - 52; // baseline of the English labels: just inside the ring, clear of the nodes
   const arc = (r: number, a0: number, a1: number) => {
     const p = (a: number) => `${n(Math.cos((a * Math.PI) / 180) * r)} ${n(Math.sin((a * Math.PI) / 180) * r)}`;
     return `M ${p(a0)} A ${r} ${r} 0 1 1 ${p(a1)}`;
@@ -268,8 +271,9 @@ export const Wheel12: React.FC<{rot: number; active: number; out?: number; broke
   return (
     <g transform={`translate(0 ${cy}) rotate(${n((rot * 180) / Math.PI)})`}>
       <path id={id} d={`M 0 ${-(R + 30)} A ${R + 30} ${R + 30} 0 1 1 -0.1 ${-(R + 30)}`} fill="none" />
+      <path id={id + '_en'} d={`M 0 ${-Ri} A ${Ri} ${Ri} 0 1 1 -0.1 ${-Ri}`} fill="none" />
       <path d={arc(R, -90 + gap, 270 - gap - 0.01)} fill="none" stroke={c.ring} strokeWidth={11} />
-      <circle r={R - 50} fill="none" stroke={c.ring} strokeWidth={3} opacity={0.6} />
+      <circle r={R - 72} fill="none" stroke={c.ring} strokeWidth={3} opacity={0.6} />
       {LINKS.map((name, i) => {
         const a = ((-90 + i * 30) * Math.PI) / 180;
         const x = Math.cos(a) * R, y = Math.sin(a) * R;
@@ -278,7 +282,7 @@ export const Wheel12: React.FC<{rot: number; active: number; out?: number; broke
         const split = i === 0 ? broken : 0;
         return (
           <g key={i}>
-            <path d={`M ${n(Math.cos(a) * (R - 50))} ${n(Math.sin(a) * (R - 50))} L ${n(Math.cos(a) * (R - 26))} ${n(Math.sin(a) * (R - 26))}`} stroke={c.ring} strokeWidth={3} opacity={0.6} />
+            <path d={`M ${n(Math.cos(a) * (R - 84))} ${n(Math.sin(a) * (R - 84))} L ${n(Math.cos(a) * (R - 72))} ${n(Math.sin(a) * (R - 72))}`} stroke={c.ring} strokeWidth={3} opacity={0.6} />
             {split > 0 ? (
               <g transform={`translate(${n(x)} ${n(y)})`}>
                 <path d="M 0 -27 A 27 27 0 0 0 0 27 Z" fill={c.on} transform={`translate(${n(-9 * split)} ${n(7 * split)}) rotate(${n(-16 * split)})`} />
@@ -290,11 +294,15 @@ export const Wheel12: React.FC<{rot: number; active: number; out?: number; broke
             <text fontFamily={fonts.mono} fontWeight={500} fontSize={21} letterSpacing={3} fill={isOut ? c.dim : on ? c.on : c.text} textAnchor="middle">
               <textPath href={`#${id}`} startOffset={`${((i / 12) * 100).toFixed(3)}%`}>{i === 0 ? '' : name}</textPath>
             </text>
+            <text fontFamily={fonts.mono} fontWeight={500} fontSize={18} letterSpacing={1.5} fill={isOut ? c.dim : on ? c.on : c.text} opacity={isOut || on ? 1 : 0.86} textAnchor="middle">
+              <textPath href={`#${id}_en`} startOffset={`${((i / 12) * 100).toFixed(3)}%`}>{i === 0 ? '' : LINKS_EN[i]}</textPath>
+            </text>
           </g>
         );
       })}
       {/* the first link sits at the seam of the label path, so it gets its own centred label */}
       <text y={-(R + 30)} fontFamily={fonts.mono} fontWeight={500} fontSize={21} letterSpacing={3} fill={out > 0 || broken > 0 ? c.on : c.text} textAnchor="middle">{LINKS[0]}</text>
+      <text y={-Ri} fontFamily={fonts.mono} fontWeight={500} fontSize={18} letterSpacing={1.5} fill={out > 0 || broken > 0 ? c.on : c.text} textAnchor="middle">{LINKS_EN[0]}</text>
     </g>
   );
 };
