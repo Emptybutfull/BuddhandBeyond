@@ -17,8 +17,9 @@ The `_obj` layer is the clouds and peaks alone, so the line of light can pass be
 2. The first figure stood like a doll in all three frames. S01 and S05 now have dance poses and a robe that
    flies; in S04 he sits in the air instead, so his outline repeats the mountain's.
 
-**Eye test:** the saffron figure is the only warm thing in each frame and covers 1 to 2% of it. In S04 the
-snow cap is brighter than he is; colour, not brightness, is what pulls the eye to him there.
+**Eye test:** the saffron (figure plus line) is the only warm thing in each frame and covers about 2 to 3% of
+it. In all three frames the brightest point is cloud or snow, not him: colour, not brightness, is what pulls
+the eye to him. That misses the eye-test rule "brightest point on the subject" and is worth a look in motion.
 
 **What a critical viewer notices first:** S04. The seated figure and the peak answer each other and the ring
 of light ties them together. It is the strongest of the three.
