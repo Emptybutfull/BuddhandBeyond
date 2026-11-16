@@ -41,3 +41,10 @@ Extra one-time installs for the collage style: `pip install "rembg[cpu,cli]"` (o
   Register `<Composition id="Awakening" component={Awakening} {...AWAKENING} />` in `Root.tsx`.
 - `scripts/audio/awakening_score.py` — makes the music and sound effects (needs only `pip install numpy`).
 - Render + sound: the four commands in `references/motion-kit.md` § cel-shaded kit.
+
+## Nov 2026: Art Lab (`art-lab/` at the repo root)
+- `art-lab/ART_LAB.md` and `art-lab/CEL_LOOK.md` — the two briefs. On the PC, put both in the video project's
+  root folder and tell Claude: "Read ART_LAB.md and CEL_LOOK.md and run Session B" (that session checks the
+  graphics card, then installs ComfyUI and asks before each model download).
+- `art-lab/lab/` — taste log, experiments, notes. Renders (`*.mp4`) are not stored in git; rebuild from source.
+

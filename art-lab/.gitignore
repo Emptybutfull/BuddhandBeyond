@@ -1,0 +1,5 @@
+# Renders are rebuilt from source ("fix the source, never the render"); stills and contact sheets are kept.
+*.mp4
+*.mov
+frames/
+__pycache__/

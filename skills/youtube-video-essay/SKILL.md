@@ -37,6 +37,9 @@ Read as needed (don't preload all):
 - `references/motion-kit.md` — the Remotion components in `src/hybrid` and `src/design`, and install.
   Includes the **cel-shaded kit** (`src/design/awakening`: a morphing drawn figure, flat-colour scene
   pieces, the 2-minute `Awakening` Reel) and the synced score script `scripts/audio/awakening_score.py`.
+- `art-lab/` at the repo root (not inside this skill) — the **Art Lab**: Steven's two briefs `ART_LAB.md`
+  (experiments, pipelines, the taste log) and `CEL_LOOK.md` (clear-line cel animation in Blender), plus
+  `lab/TASTE_LOG.md`. Read the taste log's standing rules before any visual work; log every verdict.
 - `references/recording.md` — one page for Steven on how to film himself; send it when he plans to record.
 - `references/reference-channels.md` — what was learned from the reference channels. Don't re-watch them.
 - `references/style-collage.md` — the Pursuit of Wonder collage style and its all-AI rebuild.
