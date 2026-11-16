@@ -101,7 +101,7 @@ def set_world(scene, sky_top_hex, sky_bottom_hex, horizon=0.0, top=0.55):
     w.use_nodes = True
     nt = w.node_tree
     nt.nodes.clear()
-    geo = nt.nodes.new('ShaderNodeNewGeometry')
+    coord = nt.nodes.new('ShaderNodeTexCoord')  # in a world shader, Generated is the view direction
     sep = nt.nodes.new('ShaderNodeSeparateXYZ')
     rng = nt.nodes.new('ShaderNodeMapRange')
     rng.inputs['From Min'].default_value, rng.inputs['From Max'].default_value = horizon, top
@@ -114,7 +114,7 @@ def set_world(scene, sky_top_hex, sky_bottom_hex, horizon=0.0, top=0.55):
     lp = nt.nodes.new('ShaderNodeLightPath')
     pick = nt.nodes.new('ShaderNodeMixShader')
     out = nt.nodes.new('ShaderNodeOutputWorld')
-    nt.links.new(geo.outputs['Incoming'], sep.inputs['Vector'])
+    nt.links.new(coord.outputs['Generated'], sep.inputs['Vector'])
     nt.links.new(sep.outputs['Z'], rng.inputs['Value'])
     nt.links.new(rng.outputs['Result'], mix.inputs['Factor'])
     nt.links.new(mix.outputs['Result'], sky.inputs['Color'])
@@ -190,3 +190,29 @@ def outline_lineart(scene, line_hex, px=2.5, camera=None, distance=10.0, crease_
     gm = gp.data.materials[0].grease_pencil
     gm.color = hex_rgba(line_hex)
     return gp
+
+
+def outline_bands(scene, camera, subjects, line_hex, thin=(), limits=(7.5, 13.0, 40.0)):
+    """Outline a list of (object, px) pairs with Line Art at an even on-screen width: objects are grouped
+    into distance bands, each band gets its own Line Art object. Names in `thin` get a hull line instead
+    (parts thinner than two line widths vanish under Line Art)."""
+    root = scene.collection
+    bands = {}
+    for obj, px in subjects:
+        if obj.name in thin:
+            outline_hull(obj, line_hex, px=min(px, 1.6), camera=camera, scene=scene)
+            continue
+        dist = (obj.matrix_world.translation - camera.matrix_world.translation).length
+        key = sum(dist > lim for lim in limits)
+        bands.setdefault(key, []).append((obj, dist, px))
+    made = []
+    for key, items in sorted(bands.items()):
+        c = bpy.data.collections.new('band_%d' % key)
+        root.children.link(c)
+        for obj, _, _ in items:
+            for uc in list(obj.users_collection):
+                uc.objects.unlink(obj)
+            c.objects.link(obj)
+        mean = sum(d for _, d, _ in items) / len(items)
+        made.append(outline_lineart(scene, line_hex, px=max(p for _, _, p in items), camera=camera, distance=mean * (0.8 if key == 0 else 1.0), collection=c))
+    return made

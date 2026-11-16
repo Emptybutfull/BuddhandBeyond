@@ -23,3 +23,13 @@ API facts checked on 5.2.4 (do not trust memory for other versions):
 - `ShaderNodeRaycast` exists (the 5.1+ route to toon shading); not tried.
 
 Restore after a machine reset: see `cloud-machine.md`.
+
+### 2026-11-16, later
+- World gradient: use Texture Coordinate "Generated" (the view direction) in the world shader. Geometry
+  "Incoming" gave no gradient at all. `cel_look.set_world` is fixed; the two approved look frames were rendered
+  before the fix, so their skies are flatter than a re-render would be.
+- `--objects-only` in `blender/sky_dance.py` renders with a transparent sky (`film_transparent`), giving a layer
+  to place in front of anything that should pass behind clouds or peaks.
+- Clouds: one mesh of overlapping smooth icospheres with a flat base. Toon shading gives scalloped shadow
+  shapes and Line Art draws only the outer contour.
+

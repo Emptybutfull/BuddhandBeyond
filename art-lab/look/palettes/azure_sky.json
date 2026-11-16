@@ -1,0 +1,19 @@
+{
+  "name": "azure_sky",
+  "note": "High air. One hue family (pale sky to deep navy, with cloud cream). The accent is saffron and belongs to the Buddha's robe and his line of light only.",
+  "line": "#1c2550",
+  "sky_top": "#2f66b3",
+  "sky_bottom": "#c4e2ee",
+  "cloud": ["#f6f3e7", "#a9bfe0"],
+  "far": ["#d9ebf1", "#e6f1f3"],
+  "mountain": ["#6583bb", "#2b3f78"],
+  "snow": ["#f6f3e7", "#a9bfe0"],
+  "ocean": ["#2d5fa3", "#2b3f78"],
+  "wave": ["#6fa3cf", "#234a86"],
+  "skin": ["#f2d9bd", "#b79bb8"],
+  "hair": ["#1c2550", "#121838"],
+  "accent": "#ffb347",
+  "accent_shadow": "#e07f2a",
+  "sun_elevation_deg": 38,
+  "sun_azimuth_deg": -55
+}
