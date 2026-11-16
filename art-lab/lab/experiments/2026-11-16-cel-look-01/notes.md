@@ -41,3 +41,6 @@ the left of the day frame.
 
 **Next I would try:** a 3-second proxy with a slow camera drift and the lamp pulsing on twos, to see whether
 the lines hold; a warm ground shape under the lamp at night; hand-shaped rock silhouettes.
+
+**Verdict (2026-11-16):** KEEP, his favourite of the three ("all look great expecially c"). The two stills are now
+`look/approved_day.png` and `look/approved_night.png`. Next step in CEL_LOOK.md is Step 2: a story or premise from him.
