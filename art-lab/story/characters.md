@@ -10,8 +10,12 @@
 - **Distinctive item:** the line of light his right hand draws. Same saffron, with the only glow in the frame.
 - **How he moves:** few poses, each held; a turn, an opening of the arms, a landing. Never busy. On twos.
 
-Key poses: `rise` (drifting up, hands low), `turn` (one arm curved overhead), `wing` (arms wide, legs trailing),
-`mountain` (wide stance, arms low and open, cloth hanging straight), `ocean` (arms flung wide, one knee lifted).
+Key poses (`DANCES` in the design kit): `float` (neutral, drifting), `rise` (left arm curved overhead, right
+leg bent back, cloth to one side), `turn` (the answering half: other arm up, other leg bent, cloth swings
+across), `wing` (arms wide, body tilted, legs trailing), `ocean` (arms flung wide). Before the mountain he
+sits (the kit's seated figure), so his outline repeats the peak's.
+- **Halo:** a plain white disc behind his head.
+- He is never mirrored: the robe stays over his left shoulder.
 
 ## The bird
 - A white seabird, long narrow wings, drawn in cloud cream with the cloud shadow tone. No accent.

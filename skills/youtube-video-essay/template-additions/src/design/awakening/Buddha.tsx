@@ -262,6 +262,90 @@ const Cel: React.FC<{d: string | string[]; base: string; shade: string; hi: stri
   );
 };
 
+type Rig = ReturnType<typeof rig>;
+
+// Ears, neck and torso with the robe over the left shoulder. Shared by the seated and the dancing body.
+const Trunk: React.FC<{L: Look; g: Rig; id: string}> = ({L, g, id}) => (
+  <>
+    {/* ears, neck */}
+    <Cel d={g.ears} base={L.skin} shade={L.skinSh} hi={L.skinHi} look={L} depth={0.4}>
+      {[-1, 1].map((s) => <path key={s} d={`M ${101 * s} ${n(-300)} L ${100 * s} ${n(-262 + 62 * L.ear - 14)}`} stroke={L.skinSh} strokeWidth={5} fill="none" />)}
+    </Cel>
+    <Cel d={NECK} base={L.skin} shade={L.skinSh} hi={L.skinHi} look={L} depth={0.5}>
+      {/* the chin's shadow on the neck: the signature cel-shade shape */}
+      {L.sh > 1 && <path d={FACE} transform="translate(6 30)" fill={L.skinSh} />}
+    </Cel>
+
+    {/* torso: skin, then the robe over the left shoulder */}
+    <clipPath id={id + '_t'}><path d={TORSO} /></clipPath>
+    <Cel d={TORSO} base={L.skin} shade={L.skinSh} hi={L.skinHi} look={L}>
+      {/* chest line and shadow under the chest */}
+      {L.sh > 1 && <path d="M -150 -6 C -100 30 -30 34 10 6 L 30 60 L -140 60 Z" fill={L.skinSh} opacity={0.55} />}
+    </Cel>
+    <g clipPath={`url(#${id}_t)`}>
+      <path d={ROBE_ON_TORSO} fill={L.robeSh} />
+      <path d={ROBE_ON_TORSO} fill={L.robe} transform={`translate(${n(LIGHT[0] * L.sh * 1.4)} ${n(LIGHT[1] * L.sh * 0.5)})`} />
+      {/* folds fall from the left shoulder */}
+      <path d="M 150 -120 C 120 -40 40 50 -80 96 L -60 110 C 60 66 136 -20 168 -100 Z" fill={L.robeSh} />
+      <path d="M 172 -40 C 150 30 90 96 -20 140 L 0 152 C 106 112 164 50 186 -20 Z" fill={L.robeSh} />
+      <path d={ROBE_EDGE} stroke={L.line} strokeWidth={22 + L.lw} fill="none" />
+      <path d={ROBE_EDGE} stroke={L.trim} strokeWidth={22 - L.lw} fill="none" />
+    </g>
+  </>
+);
+
+// Face, hair, crown and features.
+const Head: React.FC<{L: Look; g: Rig; id: string; eye: number; br: number; thin: number}> = ({L, g, id, eye, br, thin}) => {
+  const eyeShape = (s: number, open: number) => {
+    const y = -298 + br * 0.3;
+    const x0 = 17 * s, x1 = 66 * s, c0 = 30 * s, c1 = 54 * s;
+    const low = y + 11;
+    const up = low - open * 36;
+    return {upper: `M ${x1} ${n(y)} C ${c1} ${n(up)} ${c0} ${n(up)} ${x0} ${n(y + 2)}`, lower: `M ${x1} ${n(y)} C ${c1} ${n(low)} ${c0} ${n(low)} ${x0} ${n(y + 2)}`, full: `M ${x1} ${n(y)} C ${c1} ${n(up)} ${c0} ${n(up)} ${x0} ${n(y + 2)} C ${c0} ${n(low)} ${c1} ${n(low)} ${x1} ${n(y)} Z`, cy: y + 2};
+  };
+  return (
+    <>
+      <Cel d={FACE} base={L.skin} shade={L.skinSh} hi={L.skinHi} look={L} depth={0.75}>
+        {/* hair shadow on the forehead, nose shadow, lip shadow */}
+        {L.sh > 1 && <path d={HAIR} transform="translate(5 13)" fill={L.skinSh} />}
+        {L.sh > 1 && <path d="M 3 -322 C 9 -298 18 -278 15 -264 C 9 -259 3 -259 0 -262 Z" fill={L.skinSh} />}
+        {L.sh > 1 && <path d="M -14 -221 C -5 -214 5 -214 14 -221 C 6 -224 -6 -224 -14 -221 Z" fill={L.skinSh} />}
+      </Cel>
+      {/* crown bump, hair cap, curls */}
+      <Cel d={[ellipse(g.cr.c, g.cr.rx, g.cr.ry), HAIR, ...g.curls]} base={L.hair} shade={mixHex(L.hair, '#000000', 0.45)} hi={L.hairHi} look={L} depth={0.5}>
+        <path d="M -70 -392 C -40 -420 10 -426 40 -416 C 6 -412 -36 -400 -62 -376 Z" fill={L.hairHi} opacity={0.9} />
+      </Cel>
+      {/* brows */}
+      {[-1, 1].map((s) => <path key={s} d={`M ${74 * s} -322 C ${58 * s} -344 ${30 * s} -344 ${13 * s} -328`} stroke={L.hair} strokeWidth={L.lw * 0.9} fill="none" />)}
+      {/* eyes */}
+      {[-1, 1].map((s) => {
+        const e = eyeShape(s, eye);
+        return (
+          <g key={s}>
+            {eye > 0.04 && (
+              <>
+                <clipPath id={`${id}_e${s}`}><path d={e.full} /></clipPath>
+                <path d={e.full} fill={L.eyeWhite} />
+                <g clipPath={`url(#${id}_e${s})`}>
+                  <circle cx={41 * s} cy={e.cy - 2 - eye * 3} r={15} fill={L.iris} />
+                  <circle cx={41 * s - 5} cy={e.cy - 8 - eye * 3} r={4.2} fill="#ffffff" />
+                </g>
+                <path d={e.lower} stroke={L.line} strokeWidth={thin} fill="none" />
+              </>
+            )}
+            <path d={e.upper} stroke={L.line} strokeWidth={L.lw * 0.95} fill="none" />
+          </g>
+        );
+      })}
+      {/* nose, mouth */}
+      <path d="M -10 -266 C -5 -258 5 -258 10 -266" stroke={L.line} strokeWidth={thin} fill="none" />
+      <path d="M -24 -234 C -10 -226 10 -226 24 -234" stroke={L.line} strokeWidth={thin * 1.15} fill="none" />
+      {/* urna */}
+      {L.urna > 0.02 && <circle cx={0} cy={-340} r={7.5 * L.urna} fill={L.urnaCol} stroke={L.line} strokeWidth={thin * 0.8} />}
+    </>
+  );
+};
+
 export const Buddha: React.FC<{look: Look; pose?: Pose; seat?: boolean}> = ({look: L, pose = {}, seat = true}) => {
   const id = React.useId().replace(/:/g, '');
   const g = rig(pose, L);
@@ -280,14 +364,6 @@ export const Buddha: React.FC<{look: Look; pose?: Pose; seat?: boolean}> = ({loo
       </g>;
     });
 
-  const eyeShape = (s: number, open: number) => {
-    const y = -298 + br * 0.3;
-    const x0 = 17 * s, x1 = 66 * s, c0 = 30 * s, c1 = 54 * s;
-    const low = y + 11;
-    const up = low - open * 36;
-    return {upper: `M ${x1} ${n(y)} C ${c1} ${n(up)} ${c0} ${n(up)} ${x0} ${n(y + 2)}`, lower: `M ${x1} ${n(y)} C ${c1} ${n(low)} ${c0} ${n(low)} ${x0} ${n(y + 2)}`, full: `M ${x1} ${n(y)} C ${c1} ${n(up)} ${c0} ${n(up)} ${x0} ${n(y + 2)} C ${c0} ${n(low)} ${c1} ${n(low)} ${x1} ${n(y)} Z`, cy: y + 2};
-  };
-
   return (
     <g strokeLinecap="round">
       {/* seat */}
@@ -300,30 +376,7 @@ export const Buddha: React.FC<{look: Look; pose?: Pose; seat?: boolean}> = ({loo
       )}
 
       <g transform={`translate(0 ${n(-br)})`}>
-        {/* ears, neck */}
-        <Cel d={g.ears} base={L.skin} shade={L.skinSh} hi={L.skinHi} look={L} depth={0.4}>
-          {[-1, 1].map((s) => <path key={s} d={`M ${101 * s} ${n(-300)} L ${100 * s} ${n(-262 + 62 * L.ear - 14)}`} stroke={L.skinSh} strokeWidth={5} fill="none" />)}
-        </Cel>
-        <Cel d={NECK} base={L.skin} shade={L.skinSh} hi={L.skinHi} look={L} depth={0.5}>
-          {/* the chin's shadow on the neck: the signature cel-shade shape */}
-          {L.sh > 1 && <path d={FACE} transform="translate(6 30)" fill={L.skinSh} />}
-        </Cel>
-
-        {/* torso: skin, then the robe over the left shoulder */}
-        <clipPath id={id + '_t'}><path d={TORSO} /></clipPath>
-        <Cel d={TORSO} base={L.skin} shade={L.skinSh} hi={L.skinHi} look={L}>
-          {/* chest line and shadow under the chest */}
-          {L.sh > 1 && <path d="M -150 -6 C -100 30 -30 34 10 6 L 30 60 L -140 60 Z" fill={L.skinSh} opacity={0.55} />}
-        </Cel>
-        <g clipPath={`url(#${id}_t)`}>
-          <path d={ROBE_ON_TORSO} fill={L.robeSh} />
-          <path d={ROBE_ON_TORSO} fill={L.robe} transform={`translate(${n(LIGHT[0] * L.sh * 1.4)} ${n(LIGHT[1] * L.sh * 0.5)})`} />
-          {/* folds fall from the left shoulder */}
-          <path d="M 150 -120 C 120 -40 40 50 -80 96 L -60 110 C 60 66 136 -20 168 -100 Z" fill={L.robeSh} />
-          <path d="M 172 -40 C 150 30 90 96 -20 140 L 0 152 C 106 112 164 50 186 -20 Z" fill={L.robeSh} />
-          <path d={ROBE_EDGE} stroke={L.line} strokeWidth={22 + L.lw} fill="none" />
-          <path d={ROBE_EDGE} stroke={L.trim} strokeWidth={22 - L.lw} fill="none" />
-        </g>
+        <Trunk L={L} g={g} id={id} />
 
         {/* left arm in its sleeve */}
         <Cel d={g.lArmD} base={L.robe} shade={L.robeSh} hi={L.skinHi} look={L} />
@@ -360,44 +413,129 @@ export const Buddha: React.FC<{look: Look; pose?: Pose; seat?: boolean}> = ({loo
 
       {/* head */}
       <g transform={`translate(0 ${n(-br * 1.2)})`}>
-        <Cel d={FACE} base={L.skin} shade={L.skinSh} hi={L.skinHi} look={L} depth={0.75}>
-          {/* hair shadow on the forehead, nose shadow, lip shadow */}
-          {L.sh > 1 && <path d={HAIR} transform="translate(5 13)" fill={L.skinSh} />}
-          {L.sh > 1 && <path d="M 3 -322 C 9 -298 18 -278 15 -264 C 9 -259 3 -259 0 -262 Z" fill={L.skinSh} />}
-          {L.sh > 1 && <path d="M -14 -221 C -5 -214 5 -214 14 -221 C 6 -224 -6 -224 -14 -221 Z" fill={L.skinSh} />}
-        </Cel>
-        {/* crown bump, hair cap, curls */}
-        <Cel d={[ellipse(g.cr.c, g.cr.rx, g.cr.ry), HAIR, ...g.curls]} base={L.hair} shade={mixHex(L.hair, '#000000', 0.45)} hi={L.hairHi} look={L} depth={0.5}>
-          <path d="M -70 -392 C -40 -420 10 -426 40 -416 C 6 -412 -36 -400 -62 -376 Z" fill={L.hairHi} opacity={0.9} />
-        </Cel>
-        {/* brows */}
-        {[-1, 1].map((s) => <path key={s} d={`M ${74 * s} -322 C ${58 * s} -344 ${30 * s} -344 ${13 * s} -328`} stroke={L.hair} strokeWidth={L.lw * 0.9} fill="none" />)}
-        {/* eyes */}
-        {[-1, 1].map((s) => {
-          const e = eyeShape(s, eye);
-          return (
-            <g key={s}>
-              {eye > 0.04 && (
-                <>
-                  <clipPath id={`${id}_e${s}`}><path d={e.full} /></clipPath>
-                  <path d={e.full} fill={L.eyeWhite} />
-                  <g clipPath={`url(#${id}_e${s})`}>
-                    <circle cx={41 * s} cy={e.cy - 2 - eye * 3} r={15} fill={L.iris} />
-                    <circle cx={41 * s - 5} cy={e.cy - 8 - eye * 3} r={4.2} fill="#ffffff" />
-                  </g>
-                  <path d={e.lower} stroke={L.line} strokeWidth={thin} fill="none" />
-                </>
-              )}
-              <path d={e.upper} stroke={L.line} strokeWidth={L.lw * 0.95} fill="none" />
-            </g>
-          );
-        })}
-        {/* nose, mouth */}
-        <path d="M -10 -266 C -5 -258 5 -258 10 -266" stroke={L.line} strokeWidth={thin} fill="none" />
-        <path d="M -24 -234 C -10 -226 10 -226 24 -234" stroke={L.line} strokeWidth={thin * 1.15} fill="none" />
-        {/* urna */}
-        {L.urna > 0.02 && <circle cx={0} cy={-340} r={7.5 * L.urna} fill={L.urnaCol} stroke={L.line} strokeWidth={thin * 0.8} />}
+        <Head L={L} g={g} id={id} eye={eye} br={br} thin={thin} />
       </g>
     </g>
   );
+};
+
+// ---------- the same figure, standing in the air and dancing ----------
+// The head, torso, robe and hands are the seated figure's; only the lower body is new. Angles are
+// screen directions in degrees: 0 = right, 90 = down, -90 = up. "R" is his right (the viewer's left).
+//
+//   <g transform="translate(960 420) scale(0.28)"><DancingBuddha look={look} dance={DANCES.rise} halo="#ffffff" /></g>
+//
+// Local units are the seated rig's: heart at (0,0), top of head about -480, feet near +1000.
+export type Dance = {
+  lean: number; // tilt of the upper body, + = toward the viewer's right
+  head?: number; // extra tilt of the head
+  armR: [number, number]; // direction of upper arm, forearm (his right arm, bare)
+  armL: [number, number]; // his left arm, in the sleeve
+  legR: [number, number]; // direction of thigh, shin
+  legL: [number, number];
+  flow: [number, number]; // where the hem and the loose end of the robe trail, in local units
+  eye?: number;
+};
+
+export const DANCES: Record<'float' | 'rise' | 'turn' | 'wing' | 'ocean', Dance> = {
+  float: {lean: 0, head: 0, armR: [112, 96], armL: [68, 84], legR: [95, 98], legL: [85, 90], flow: [-20, 110]},
+  rise: {lean: -7, head: 7, armR: [160, 184], armL: [-62, -110], legR: [102, 140], legL: [86, 92], flow: [-170, 70]},
+  turn: {lean: 8, head: -7, armR: [-120, -68], armL: [22, -4], legR: [94, 88], legL: [78, 40], flow: [170, 70]},
+  wing: {lean: 24, head: -10, armR: [206, 196], armL: [-22, -8], legR: [138, 152], legL: [126, 144], flow: [-300, 0]},
+  ocean: {lean: -8, head: -10, armR: [197, 174], armL: [-17, 6], legR: [108, 126], legL: [96, 116], flow: [-280, 96]},
+};
+
+export const mixDance = (a: Dance, b: Dance, t: number): Dance => {
+  const m = (x: number, y: number) => x + (y - x) * t;
+  const m2 = (x: [number, number], y: [number, number]): [number, number] => [m(x[0], y[0]), m(x[1], y[1])];
+  return {lean: m(a.lean, b.lean), head: m(a.head ?? 0, b.head ?? 0), armR: m2(a.armR, b.armR), armL: m2(a.armL, b.armL), legR: m2(a.legR, b.legR), legL: m2(a.legL, b.legL), flow: m2(a.flow, b.flow), eye: m(a.eye ?? 0, b.eye ?? 0)};
+};
+
+const dirv = (deg: number): V => [Math.cos(deg * D2R), Math.sin(deg * D2R)];
+const addv = (p: V, d: V, k = 1): V => [p[0] + d[0] * k, p[1] + d[1] * k];
+// smooth curves through points (Catmull-Rom), closed or open
+const smooth = (pts: V[], closed: boolean): string => {
+  const N = pts.length;
+  const at = (i: number): V => (closed ? pts[((i % N) + N) % N] : pts[Math.max(0, Math.min(N - 1, i))]);
+  let d = `M ${n(pts[0][0])} ${n(pts[0][1])}`;
+  for (let i = 0; i < (closed ? N : N - 1); i++) {
+    const p0 = at(i - 1), p1 = at(i), p2 = at(i + 1), p3 = at(i + 2);
+    d += ` C ${n(p1[0] + (p2[0] - p0[0]) / 6)} ${n(p1[1] + (p2[1] - p0[1]) / 6)} ${n(p2[0] - (p3[0] - p1[0]) / 6)} ${n(p2[1] - (p3[1] - p1[1]) / 6)} ${n(p2[0])} ${n(p2[1])}`;
+  }
+  return d + (closed ? ' Z' : '');
+};
+
+export const DancingBuddha: React.FC<{look: Look; dance: Dance; halo?: string}> = ({look: L, dance: D, halo}) => {
+  const id = React.useId().replace(/:/g, '');
+  const g = rig({}, L);
+  const thin = Math.max(2.5, L.lw * 0.5);
+  const pivot: V = [0, 150];
+  const rot = (p: V): V => {
+    const a = D.lean * D2R, c = Math.cos(a), s = Math.sin(a), x = p[0] - pivot[0], y = p[1] - pivot[1];
+    return [pivot[0] + x * c - y * s, pivot[1] + x * s + y * c];
+  };
+  const turn = `rotate(${n(D.lean)} ${pivot[0]} ${pivot[1]})`;
+
+  const armOf = (S: V, a: [number, number]): Arm => {
+    const E = addv(S, dirv(a[0]), 178);
+    return {S, E, W: addv(E, dirv(a[1]), 176), ang: a[1]};
+  };
+  const rArm = armOf([-184, -100], D.armR), lArm = armOf([184, -100], D.armL);
+  const rHand = hand(rArm, 90), lHand = hand(lArm, 90);
+
+  // legs hang from the hips; the lower robe is one flowing shape around them
+  const leg = (H: V, a: [number, number], side: number) => {
+    const K = addv(H, dirv(a[0]), 360), A = addv(K, dirv(a[1]), 350), T = addv(A, dirv(a[1] - 32 * side), 118);
+    const out = (p: V, q: V): V => {
+      const dx = q[0] - p[0], dy = q[1] - p[1], l = Math.hypot(dx, dy) || 1;
+      let nx = -dy / l, ny = dx / l;
+      if (nx * side < 0) { nx = -nx; ny = -ny; }
+      return [nx, ny];
+    };
+    const mid = lerpV(K, A, 0.62);
+    return {K, A, T, hip: addv(addv(H, out(H, K), 66), [0, -10]), knee: addv(K, out(H, K), 78), hem: addv(mid, out(K, A), 98)};
+  };
+  const R = leg([-64, 196], D.legR, -1), Lg = leg([64, 196], D.legL, 1);
+  const fl = Math.hypot(D.flow[0], D.flow[1]);
+  const fd: V = fl > 20 ? [D.flow[0] / fl, D.flow[1] / fl] : [-0.97, 0.24];
+  const fp: V = [-fd[1], fd[0]];
+  const w1 = addv(addv(lerpV(R.hem, Lg.hem, 0.3), D.flow, 0.55), [0, 30]);
+  const tail = addv(addv(lerpV(R.hem, Lg.hem, 0.55), D.flow, 1.35), [0, 44]);
+  const w2 = addv(addv(lerpV(R.hem, Lg.hem, 0.8), D.flow, 0.5), [0, 26]);
+  const skirt = smooth([rot([-116, 118]), R.hip, R.knee, R.hem, w1, tail, w2, Lg.hem, Lg.knee, Lg.hip, rot([116, 118]), rot([0, 96])], true);
+  const hemLine = smooth([R.hem, w1, tail, w2, Lg.hem], false);
+  const folds: [V, V][] = [[[-52, 214], w1], [[0, 226], tail], [[54, 214], w2]];
+  // the loose end of the robe, over his left shoulder and out behind him
+  const b0 = rot([118, -170]), b1 = rot([204, -82]), bm = lerpV(b0, b1, 0.5), len = 250 + fl * 0.9;
+  const sash = smooth([b0, b1, addv(addv(addv(b1, fd, len * 0.5), fp, 34), [0, 34]), addv(addv(bm, fd, len), [0, 96]), addv(addv(addv(b0, fd, len * 0.5), fp, -30), [0, 30])], true);
+
+  return (
+    <g strokeLinecap="round">
+      {halo && <circle cx={0} cy={-300} r={176} fill={halo} stroke={L.line} strokeWidth={L.lw} transform={`${turn} rotate(${n(D.head ?? 0)} 0 -190)`} />}
+      <Cel d={sash} base={L.robe} shade={L.robeSh} hi={L.skinHi} look={L} depth={0.6} />
+      {[R, Lg].map((q, i) => <Cel key={i} d={[capsule(q.K, 52, q.A, 30), capsule(q.A, 30, q.T, 15)]} base={L.skin} shade={L.skinSh} hi={L.skinHi} look={L} depth={0.5} />)}
+      <Cel d={skirt} base={L.robe2} shade={L.robeSh} hi={L.skinHi} look={L}>
+        {folds.map(([a, b], i) => <path key={i} d={`M ${n(a[0])} ${n(a[1])} L ${n(b[0] - fp[0] * 20)} ${n(b[1] - fp[1] * 20)} L ${n(b[0] + fp[0] * 20)} ${n(b[1] + fp[1] * 20)} Z`} fill={L.robeSh} />)}
+        {folds.map(([a, b], i) => <path key={'l' + i} d={`M ${n(a[0])} ${n(a[1])} L ${n(b[0] - fp[0] * 20)} ${n(b[1] - fp[1] * 20)}`} stroke={L.line} strokeWidth={thin} fill="none" opacity={0.7} />)}
+        <path d={hemLine} stroke={L.line} strokeWidth={52 + L.lw} fill="none" />
+        <path d={hemLine} stroke={L.trim} strokeWidth={52 - L.lw} fill="none" />
+      </Cel>
+      <g transform={turn}>
+        <Trunk L={L} g={g} id={id} />
+        <g transform={`rotate(${n(D.head ?? 0)} 0 -190)`}><Head L={L} g={g} id={id} eye={Math.max(0, Math.min(1, D.eye ?? 0))} br={0} thin={thin} /></g>
+        <Cel d={[capsule(lArm.S, 49, lArm.E, 43), capsule(lArm.E, 43, lArm.W, 33)]} base={L.robe} shade={L.robeSh} hi={L.skinHi} look={L} />
+        <Cel d={lHand.d} base={L.skin} shade={L.skinSh} hi={L.skinHi} look={L} depth={0.4} />
+        <Cel d={[capsule(rArm.S, 45, rArm.E, 39), capsule(rArm.E, 39, rArm.W, 29)]} base={L.skin} shade={L.skinSh} hi={L.skinHi} look={L} />
+        <Cel d={rHand.d} base={L.skin} shade={L.skinSh} hi={L.skinHi} look={L} depth={0.4} />
+      </g>
+    </g>
+  );
+};
+
+// Where a hand is, in local units, for attaching things to it (the line of light).
+export const danceHand = (D: Dance, which: 'R' | 'L'): V => {
+  const S: V = which === 'R' ? [-184, -100] : [184, -100], a = which === 'R' ? D.armR : D.armL;
+  const W = addv(addv(S, dirv(a[0]), 178), dirv(a[1]), 176), tip = addv(W, dirv(a[1]), 90);
+  const t = D.lean * D2R, c = Math.cos(t), s = Math.sin(t), x = tip[0], y = tip[1] - 150;
+  return [x * c - y * s, 150 + x * s + y * c];
 };

@@ -107,6 +107,7 @@ Working example: the 2-minute Reel `Awakening` (1080×1920, 60 BPM).
 | Piece | What it is |
 |---|---|
 | `Buddha` + `LOOKS` + `mixLook` | One seated figure with ~25 parameters (skin, robe, hair, line weight, shadow depth, back-light, ushnisha, curls, ear length, urna, lotus bloom). `mixLook(a, b, t)` blends any two looks, so the figure *morphs*. Poses: `reach` (hands in lap → touching the earth), `eye`, `mudra` (`dhyana`, `earth`, `give`, `fearless`, `teach`). |
+| `DancingBuddha` + `DANCES` + `mixDance` | The same figure standing in the air: head, torso, robe and hands are the seated figure's; the lower robe flows around two posable legs. A pose is a few angles (`lean`, `armR`, `armL`, `legR`, `legL`, `flow`). `halo="#fff"` adds a disc behind the head; `danceHand()` gives a hand's position for attaching a trail. Never mirror him. |
 | `Silhouette` | The same body as one flat shape. Stroke it wide in flat colours for aura bands, nest scaled copies for a tunnel, use it as a mask for an outline-only figure. |
 | `Elements.tsx` | `Stars`, `Moon`, `BodhiTree`, `Earth`, `MaraField` (red field, spikes, arrows that turn to petals), `Tunnel`, `DivineEye`, `Beings`, `Wheel12` (twelve links: Pali on the ring, English just inside it; `LINKS`, `LINKS_EN`), `Flames`, `Rays`, `SpeedLines`, `AuraBands`, `Emanation`, `EnsoStroke`. |
 | `GrainGradient bands={7}` | Posterises any field into flat steps: the cel-shaded sky. `<Grain still />` is paper grain that does not move (small files). |

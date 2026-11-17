@@ -18,6 +18,12 @@ Read this before any visual work. Append after every verdict.
 ## Entries
 (Newest first.)
 
+### 2026-11-17 · sky-dance-01 · REVISE
+What it was: three still design frames for his premise (dancing above the clouds, seated before the peak, arms wide over the sea), with a simple cut-out dancer.
+Human said: "Let's revise keep going with out skills"
+My read (unconfirmed): he wants it better, not different, and wants momentum: no reason was given, so I took the weaknesses I had listed myself (cut-out figure, no proof of dance, plain sea) as the brief for the revision. "With out skills" I read as "with our skills": use the directing rubric and motion rules from the YouTube skill.
+Rule candidate: when he says revise without a reason, fix the listed weaknesses and keep moving rather than stopping to ask.
+
 ### 2026-11-16 · cel-look-01 · KEEP (his favourite of the three)
 What it was: the clear-line cel look test in Blender, a day still and a night still (beacon, rocks, crystals).
 Human said: "all look great expecially c"

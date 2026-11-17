@@ -10,7 +10,7 @@ About 33 seconds, 1920x1080, 24 fps. Figure animation on twos; camera smooth. No
 
 | Shot | Dur | What happens (one action) | Framing | Source | Palette | Accent | Sound note |
 |---|---|---|---|---|---|---|---|
-| S01 | 6 s | Dawn above the clouds. A small figure rises from behind a cloud. | Wide, locked off, clouds in three layers | A + figure | azure_sky | the robe: one warm dot | high wind, very quiet; one soft bell as he appears |
+| S01 | 7 s | Dawn above the clouds. He rises out of the cloud deck and begins to dance; his raised hand leaves a line of light. | Wide, locked off, clouds in three layers | A + figure | azure_sky | the robe, then the line | high wind, very quiet; one soft bell as he appears |
 | S02 | 5 s | He turns in the air and his hand begins a line of light. | Full figure, slow push-in | figure over A sky (or C, see prompts) | azure_sky | robe; the line begins | cloth, a rising tone |
 | S03 | 5 s | A white bird crosses. He opens his arms and glides beside it. *Free as a bird.* | Wide side view, slow drift sideways | A + figure + bird | azure_sky | the line trails behind both | wingbeats, air |
 | S04 | 6 s | He comes to rest before a great peak and holds still. Cloud races past; neither he nor the mountain moves. *Strong as a mountain.* | Low-angle hero shot, locked off | A + figure, held pose | azure_sky | robe; the line circles the peak once | low drone, gusts; stillness |
@@ -25,4 +25,5 @@ should move more fluidly than a cut-out can.
 **On this machine** (no GPU) camera moves are done as slow drifts over layered Blender stills. On the PC the
 same scenes can be rendered with real camera moves.
 
-**Status:** S01, S04, S05 have design frames (see `lab/experiments/2026-11-16-sky-dance-01/`). Nothing is animated yet.
+**Status (2026-11-17):** S01 and S04 are animated, S05 is a revised still (`lab/experiments/2026-11-17-sky-dance-02/`).
+S02, S03 and S06 are not started. The first design frames are in `2026-11-16-sky-dance-01/`.
